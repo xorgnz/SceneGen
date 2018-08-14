@@ -1,0 +1,111 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.memehazard.wheel.query.dao.QueryCacheLineDAO">
+
+    <cache />
+    
+    <resultMap id="qclWithQuery" type="org.memehazard.wheel.query.model.QueryCacheLine">
+        <id property="id" column="querycl_id" />
+        <result property="parameterValueString" column="querycl_param_val_str" />
+        <result property="result" column="querycl_result" />
+        <result property="retrieved" column="querycl_retrieved" />
+        <association property="query" javaType="org.memehazard.wheel.query.model.Query">
+            <result property="id" column="query_id"/>
+            <result property="name" column="query_name"/>
+            <result property="queryId" column="query_qid"/>
+        </association>
+    </resultMap>
+    
+    <resultMap id="qcl" type="org.memehazard.wheel.query.model.QueryCacheLine">
+        <id property="id" column="querycl_id" />
+        <result property="parameterValueString" column="querycl_param_val_str" />
+        <result property="result" column="querycl_result" />
+        <result property="retrieved" column="querycl_retrieved" />
+    </resultMap>
+        
+    <insert id="add" parameterType="org.memehazard.wheel.query.model.QueryCacheLine">
+        <selectKey keyProperty="id" resultType="int" order="BEFORE">
+            select nextval('query_cache_line_querycl_id_seq'::regclass)
+        </selectKey>
+        
+        INSERT INTO query_cache_line 
+            (querycl_id, querycl_param_val_str, querycl_result, querycl_retrieved, querycl_query_id)
+        VALUES 
+        (
+            #{id}, #{parameterValueString}, #{result}, #{retrieved}, #{query.id}
+        );
+    </insert>
+        
+    <delete id="delete" parameterType="integer">
+        DELETE FROM query_cache_line WHERE querycl_id = #{id}
+    </delete>
+
+    <delete id="deleteAll" parameterType="integer">
+        DELETE FROM query_cache_line
+    </delete>
+    
+    <delete id="deleteByQuery" parameterType="integer">
+        DELETE FROM query_cache_line WHERE querycl_query_id = #{queryId}
+    </delete>
+        
+    <select id="get" parameterType="integer" resultMap="qclWithQuery">
+        SELECT
+            querycl_id,
+            querycl_param_val_str,
+            querycl_result,
+            querycl_retrieved,
+            query_id,
+            query_name,
+            query_qid
+        FROM query_cache_line
+        INNER JOIN query ON querycl_query_id = query_id
+        WHERE querycl_id = #{id}
+    </select>
+    
+        
+    <select id="getByQueryAndParam" parameterType="map" resultMap="qclWithQuery">
+        SELECT
+            querycl_id,
+            querycl_param_val_str,
+            querycl_result,
+            querycl_retrieved,
+            query_id,
+            query_name,
+            query_qid
+        FROM query_cache_line
+        INNER JOIN query ON querycl_query_id = query_id
+        WHERE query_id = #{queryId} AND querycl_param_val_str = #{paramString}
+    </select>    
+    
+    
+    <select id="listAll" resultMap="qcl">
+        SELECT
+            querycl_id,
+            querycl_param_val_str,
+            querycl_result,
+            querycl_retrieved
+        FROM query_cache_line
+        ORDER BY querycl_retrieved DESC
+    </select>
+    
+    <select id="listByQuery" parameterType="integer" resultMap="qcl">
+        SELECT
+            querycl_id,
+            querycl_param_val_str,
+            querycl_result,
+            querycl_retrieved
+        FROM query_cache_line
+        WHERE querycl_query_id = #{queryId}
+        ORDER BY querycl_retrieved ASC
+    </select>
+    
+    <update id="update">
+        UPDATE query_cache_line SET
+            querycl_param_val_str = #{parameterValueString},
+            querycl_result = #{result},
+            querycl_retrieved = #{retrieved},
+            querycl_query_id = #{query.id}
+        WHERE querycl_id = #{id}
+    </update>
+</mapper>

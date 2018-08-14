@@ -1,0 +1,177 @@
+@CHARSET "ISO-8859-1";
+
+/*  *******************************************************************************
+    Hierarchical Lists
+    ------------------------------------------------------------------------------- */
+div.hierarchy {
+    margin: 4px;
+    padding: 5px 4px 0px 4px;
+    border: 1px solid #f00;
+}
+
+div.hier_children {
+    margin: 0px 0px 0px 20px;
+    padding: 0px 0px 0px 0px;
+}
+
+div.hier_element {
+    padding: 3px 3px 3px 5px ;
+    margin: 0px 0px 5px 20px;
+    border-top: 1px solid #CACACA;
+    border-bottom: 2px solid #73A573;
+    position: relative;
+}
+
+div.hier_element.c {
+    background-color: #bbb
+}
+
+div.hier_element.ci {
+    background-color: #ddd
+}
+
+div.hier_element.ek {
+    background-color: #fdd
+}
+
+div.hier_element.lk {
+    background-color: #dfd
+}
+
+div.hier_element.rk {
+    background-color: #ddf
+}
+
+div.hier_element.lfact {
+    background-color: #ffd
+}
+
+div.hier_element.rfact {
+    background-color: #dff
+}
+
+span.hier_label {
+    display: inline-block;
+    max-width: 460px;
+    font-size: 12px;
+    line-height: 14px;
+    padding-left: 2px;
+}
+
+button.hier_toggle_open {
+    display: inline-block;
+    position: absolute;
+    top: 3px;
+    left: -20px;
+
+    width: 16px;
+    height: 16px;
+    border: 0px;
+
+    cursor:pointer;
+    background-image:url('../images/tutoring/hier_open.png');
+}
+
+button.hier_toggle_closed {
+    display: inline-block;
+    position: absolute;
+    top: 3px;
+    left: -20px;
+
+    width: 16px;
+    height: 16px;
+    border: 0px;
+
+    cursor:pointer;
+    background-image:url('../images/tutoring/hier_closed.png');
+}
+
+span.hier_bullet {
+    display: inline-block;
+    position: absolute;
+    top: 3px;
+    left: -20px;
+
+    width: 16px;
+    height: 16px;
+
+    background-image:url('../images/tutoring/hier_bullet.png');
+}
+
+/*  *******************************************************************************
+    Progress bars
+    ------------------------------------------------------------------------------- */
+div.pb_holder {
+    display: inline;
+    position: absolute;
+    float: right;
+    top: 3px;
+    right: 3px;
+
+    width: 150px;
+    height: 14px;
+
+    border: 1px solid #666;
+}
+
+div.pb_bar_left {
+    position: absolute;
+    left: 0px;
+
+    height: 14px;
+
+    z-index: 1;
+    background-color: #2a0;
+}
+
+div.pb_bar_right {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+
+    height: 14px;
+
+    z-index: 1;
+    background-color: #b30;
+}
+
+div.pb_bars {
+    position: absolute;
+    top: 0px;
+
+    width: 150px;
+    height: 14px;
+    padding: 0px;
+    margin: 0px;
+
+    z-index: 1;
+}
+
+div.pb_label {
+    position: absolute;
+
+    width: 150px;
+    height: 14px;
+
+    font-size: 12px;
+    text-align: center;
+    line-height: 12px;
+    font-weight: bold;
+    color: #fff;
+    z-index: 6;
+}
+
+/*  ****************************************************************************
+    Links
+    ---------------------------------------------------------------------------- */
+div.links_holder {
+    display: inline;
+    position: absolute;
+    float: right;
+    top: 3px;
+    right: 156px;
+
+    width: 63px;
+    height: 14px;
+}
+

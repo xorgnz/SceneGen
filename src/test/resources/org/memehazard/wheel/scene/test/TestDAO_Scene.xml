@@ -1,0 +1,546 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.memehazard.wheel.scene.test.TestDAO_Scene">
+
+    <cache />
+    
+
+    <insert id="prep_SceneDAO_crud">
+        DELETE FROM scene;
+    </insert>    
+    
+
+
+
+    <insert id="prep_SceneFacade_addSceneFragmentWithParams">
+        DELETE FROM scene_fragment_member;
+        DELETE FROM scene_fragment;
+        DELETE FROM scene;
+        DELETE FROM asset;
+        DELETE FROM asset_set;
+        DELETE FROM stylesheet;
+        DELETE FROM query;
+    
+        INSERT INTO query (query_id, query_qid, query_name, query_description) VALUES (123, '295', 'Query', 'Description');
+        INSERT INTO stylesheet (ssheet_id, ssheet_name, ssheet_description) VALUES (123, 'Stylesheet', 'Description');
+        INSERT INTO asset_set (assetset_id, assetset_name, assetset_maintainer) VALUES (123, 'Asset Set', 'Maintainer');
+        
+        INSERT INTO asset (asset_id, asset_name, asset_entity_id, asset_x3d_filename, asset_obj_filename, asset_centroid_x, asset_centroid_y, asset_centroid_z, asset_max_x, asset_max_y, asset_max_z, asset_min_x, asset_min_y, asset_min_z, asset_assetset_id) VALUES (0, 'Asset 50', 0, 'file.x3d', 'file.obj', '0.01', '0.02', '0.03', '0.11', '0.12', '0.13', '0.21', '0.22', '0.23', 123);        
+        INSERT INTO asset (asset_id, asset_name, asset_entity_id, asset_x3d_filename, asset_obj_filename, asset_centroid_x, asset_centroid_y, asset_centroid_z, asset_max_x, asset_max_y, asset_max_z, asset_min_x, asset_min_y, asset_min_z, asset_assetset_id) VALUES (1, 'Asset 50', 1, 'file.x3d', 'file.obj', '0.01', '0.02', '0.03', '0.11', '0.12', '0.13', '0.21', '0.22', '0.23', 123);        
+        INSERT INTO asset (asset_id, asset_name, asset_entity_id, asset_x3d_filename, asset_obj_filename, asset_centroid_x, asset_centroid_y, asset_centroid_z, asset_max_x, asset_max_y, asset_max_z, asset_min_x, asset_min_y, asset_min_z, asset_assetset_id) VALUES (2, 'Asset 50', 2, 'file.x3d', 'file.obj', '0.01', '0.02', '0.03', '0.11', '0.12', '0.13', '0.21', '0.22', '0.23', 123);        
+        
+        INSERT INTO scene 
+        (
+            scene_id, 
+            scene_name, 
+            scene_viewpoint_pos_x, scene_viewpoint_pos_y, scene_viewpoint_pos_z,
+            scene_viewpoint_rot_x, scene_viewpoint_rot_y, scene_viewpoint_rot_z,
+            scene_viewpoint_targ_x, scene_viewpoint_targ_y, scene_viewpoint_targ_z,
+            scene_viewpoint_up_x, scene_viewpoint_up_y, scene_viewpoint_up_z
+        ) VALUES (
+            0, 
+            'Scene', 
+            0.0, 0.1, 0.2,
+            1.0, 1.1, 1.2,
+            2.0, 2.1, 2.2,
+            3.0, 3.1, 3.2
+        );
+    </insert> 
+    
+    
+    
+    
+    <insert id="prep_SceneFacade_updateSceneFragmentWithParams">
+        DELETE FROM scene_fragment_member;
+        DELETE FROM scene_fragment;
+        DELETE FROM scene;
+        DELETE FROM asset;
+        DELETE FROM asset_set;
+        DELETE FROM stylesheet;
+        DELETE FROM query;
+    
+        INSERT INTO query (query_id, query_qid, query_name, query_description) VALUES (123, '295', 'Query Z', 'Description');
+        INSERT INTO query (query_id, query_qid, query_name, query_description) VALUES (124, '295', 'Query Y', 'Description');        
+        INSERT INTO stylesheet (ssheet_id, ssheet_name, ssheet_description) VALUES (123, 'Stylesheet Z', 'Description');
+        INSERT INTO stylesheet (ssheet_id, ssheet_name, ssheet_description) VALUES (124, 'Stylesheet Y', 'Description');        
+        INSERT INTO asset_set (assetset_id, assetset_name, assetset_maintainer) VALUES (123, 'Asset Set Z', 'Maintainer');
+        INSERT INTO asset_set (assetset_id, assetset_name, assetset_maintainer) VALUES (124, 'Asset Set Y', 'Maintainer');        
+
+        INSERT INTO asset (asset_id, asset_name, asset_entity_id, asset_x3d_filename, asset_obj_filename, asset_centroid_x, asset_centroid_y, asset_centroid_z, asset_max_x, asset_max_y, asset_max_z, asset_min_x, asset_min_y, asset_min_z, asset_assetset_id) VALUES (0, 'Asset 50', 0, 'file.x3d', 'file.obj', '0.01', '0.02', '0.03', '0.11', '0.12', '0.13', '0.21', '0.22', '0.23', 123);        
+        INSERT INTO asset (asset_id, asset_name, asset_entity_id, asset_x3d_filename, asset_obj_filename, asset_centroid_x, asset_centroid_y, asset_centroid_z, asset_max_x, asset_max_y, asset_max_z, asset_min_x, asset_min_y, asset_min_z, asset_assetset_id) VALUES (1, 'Asset 50', 1, 'file.x3d', 'file.obj', '0.01', '0.02', '0.03', '0.11', '0.12', '0.13', '0.21', '0.22', '0.23', 124);        
+        INSERT INTO asset (asset_id, asset_name, asset_entity_id, asset_x3d_filename, asset_obj_filename, asset_centroid_x, asset_centroid_y, asset_centroid_z, asset_max_x, asset_max_y, asset_max_z, asset_min_x, asset_min_y, asset_min_z, asset_assetset_id) VALUES (2, 'Asset 50', 2, 'file.x3d', 'file.obj', '0.01', '0.02', '0.03', '0.11', '0.12', '0.13', '0.21', '0.22', '0.23', 124);        
+                
+        INSERT INTO scene 
+        (
+            scene_id, 
+            scene_name, 
+            scene_viewpoint_pos_x, scene_viewpoint_pos_y, scene_viewpoint_pos_z,
+            scene_viewpoint_rot_x, scene_viewpoint_rot_y, scene_viewpoint_rot_z,
+            scene_viewpoint_targ_x, scene_viewpoint_targ_y, scene_viewpoint_targ_z,
+            scene_viewpoint_up_x, scene_viewpoint_up_y, scene_viewpoint_up_z
+        ) VALUES (
+            0, 
+            'Scene', 
+            0.0, 0.1, 0.2,
+            1.0, 1.1, 1.2,
+            2.0, 2.1, 2.2,
+            3.0, 3.1, 3.2
+        );
+        
+        INSERT INTO scene_fragment (scenef_id, scenef_name, scenef_type, scenef_scene_id, scenef_ssheet_id, scenef_assetset_id, scenef_query_id, scenef_query_param_str) VALUES(0, 'Scene fragment', 0, 0, 123, 123, 123, 'Params');
+        
+        INSERT INTO scene_fragment_member 
+        (
+            scenefm_id, scenefm_entity_id, scenefm_entity_name, scenefm_visible, 
+            scenefm_transform_pos_x, scenefm_transform_pos_y, scenefm_transform_pos_z, scenefm_transform_rot_x, scenefm_transform_rot_y, scenefm_transform_rot_z, 
+            scenefm_mtl_alpha, scenefm_mtl_ambient, scenefm_mtl_diffuse, scenefm_mtl_emissive, scenefm_mtl_specular, scenefm_mtl_shininess, 
+            scenefm_scenef_id, scenefm_asset_id
+        ) VALUES (
+            0, 20, 'Member Z', true, 
+            1.0, 2.0, 3.0, 4.0, 5.0, 6.0,
+            7.0, '#ff0000', '#ff0001', '#ff0002', '#ff0003', 0,
+            0, 0
+        );
+    
+    </insert>                                                                                                                                                                                                                             
+    
+    
+    
+    
+    <insert id="prep_SceneFacade_getFullScene">
+        DELETE FROM scene;
+        DELETE FROM asset;
+        DELETE FROM asset_set;
+        DELETE FROM scene_fragment;
+        DELETE FROM stylesheet;
+        DELETE FROM query;
+    
+        INSERT INTO query (query_id, query_qid, query_name, query_description)  VALUES (1, '295', 'Query', 'Description');
+        INSERT INTO stylesheet (ssheet_id, ssheet_name, ssheet_description)     VALUES (1, 'Stylesheet', 'Description');
+        INSERT INTO asset_set (assetset_id, assetset_name, assetset_maintainer) VALUES (1, 'Asset Set', 'Maintainer');
+        INSERT INTO asset (asset_id, asset_name, asset_entity_id, asset_x3d_filename, asset_obj_filename, asset_centroid_x, asset_centroid_y, asset_centroid_z, asset_max_x, asset_max_y, asset_max_z, asset_min_x, asset_min_y, asset_min_z, asset_assetset_id) VALUES (1, 'Asset', '1000', 'file.x3d', 'file.obj', '0.01', '0.02', '0.03', '0.11', '0.12', '0.13', '0.21', '0.22', '0.23', 1);        
+                
+        INSERT INTO scene 
+        (
+            scene_id, 
+            scene_name, 
+            scene_viewpoint_pos_x, scene_viewpoint_pos_y, scene_viewpoint_pos_z,
+            scene_viewpoint_rot_x, scene_viewpoint_rot_y, scene_viewpoint_rot_z,
+            scene_viewpoint_targ_x, scene_viewpoint_targ_y, scene_viewpoint_targ_z,
+            scene_viewpoint_up_x, scene_viewpoint_up_y, scene_viewpoint_up_z
+        ) VALUES (
+            0, 
+            'Scene', 
+            0.0, 0.1, 0.2,
+            1.0, 1.1, 1.2,
+            2.0, 2.1, 2.2,
+            3.0, 3.1, 3.2
+        );
+                                       
+        INSERT INTO scene_fragment (scenef_id, scenef_name, scenef_type, scenef_scene_id, scenef_ssheet_id, scenef_assetset_id, scenef_query_id, scenef_query_param_str) VALUES(0, 'Scene fragment 2', 0, 0, 1, 1, 1, 'Params');
+        INSERT INTO scene_fragment (scenef_id, scenef_name, scenef_type, scenef_scene_id, scenef_ssheet_id, scenef_assetset_id, scenef_query_id, scenef_query_param_str) VALUES(1, 'Scene fragment 1', 0, 0, 1, 1, 1, 'Params');
+        
+        INSERT INTO scene_fragment_member 
+        (
+            scenefm_id, scenefm_entity_id, scenefm_entity_name, scenefm_visible, 
+            scenefm_transform_pos_x, scenefm_transform_pos_y, scenefm_transform_pos_z, scenefm_transform_rot_x, scenefm_transform_rot_y, scenefm_transform_rot_z, 
+            scenefm_mtl_alpha, scenefm_mtl_ambient, scenefm_mtl_diffuse, scenefm_mtl_emissive, scenefm_mtl_specular, scenefm_mtl_shininess, 
+            scenefm_scenef_id, scenefm_asset_id
+        ) VALUES (
+            0, 20, 'Member 30', true,
+            1.0, 2.0, 3.0, 4.0, 5.0, 6.0,
+            7.0, '#ff0000', '#ff0001', '#ff0002', '#ff0003', 0,
+            0, 1
+        );
+        INSERT INTO scene_fragment_member 
+        (
+            scenefm_id, scenefm_entity_id, scenefm_entity_name, scenefm_visible, 
+            scenefm_transform_pos_x, scenefm_transform_pos_y, scenefm_transform_pos_z, scenefm_transform_rot_x, scenefm_transform_rot_y, scenefm_transform_rot_z, 
+            scenefm_mtl_alpha, scenefm_mtl_ambient, scenefm_mtl_diffuse, scenefm_mtl_emissive, scenefm_mtl_specular, scenefm_mtl_shininess, 
+            scenefm_scenef_id, scenefm_asset_id
+        ) VALUES (
+            1, 20, 'Member 21', true,
+            1.1, 2.1, 3.1, 4.1, 5.1, 6.1,
+            7.1, '#00ff00', '#00ff01', '#00ff02', '#00ff03', 5,
+            1, 1
+        );
+        INSERT INTO scene_fragment_member 
+        (
+            scenefm_id, scenefm_entity_id, scenefm_entity_name, scenefm_visible, 
+            scenefm_transform_pos_x, scenefm_transform_pos_y, scenefm_transform_pos_z, scenefm_transform_rot_x, scenefm_transform_rot_y, scenefm_transform_rot_z, 
+            scenefm_mtl_alpha, scenefm_mtl_ambient, scenefm_mtl_diffuse, scenefm_mtl_emissive, scenefm_mtl_specular, scenefm_mtl_shininess, 
+            scenefm_scenef_id, scenefm_asset_id
+        ) VALUES (
+            2, 20, 'Member 12', true,
+            1.2, 2.2, 3.2, 4.2, 5.2, 6.2,
+            7.2, '#0000f0', '#0000f1', '#0000f2', '#0000f3', 10,
+            1, 1
+        );
+    </insert>   
+    
+    
+    
+    
+    <insert id="prep_SceneFragmentDAO_crud">
+        DELETE FROM scene_fragment;
+        DELETE FROM scene;
+        DELETE FROM asset_set;
+        DELETE FROM stylesheet;
+        DELETE FROM query;
+                
+        INSERT INTO scene 
+        (
+            scene_id, 
+            scene_name, 
+            scene_viewpoint_pos_x, scene_viewpoint_pos_y, scene_viewpoint_pos_z,
+            scene_viewpoint_rot_x, scene_viewpoint_rot_y, scene_viewpoint_rot_z,
+            scene_viewpoint_targ_x, scene_viewpoint_targ_y, scene_viewpoint_targ_z,
+            scene_viewpoint_up_x, scene_viewpoint_up_y, scene_viewpoint_up_z
+        ) VALUES (
+            0, 
+            'Scene Z', 
+            0.0, 0.1, 0.2,
+            1.0, 1.1, 1.2,
+            2.0, 2.1, 2.2,
+            3.0, 3.1, 3.2
+        );
+                
+        INSERT INTO scene 
+        (
+            scene_id, 
+            scene_name, 
+            scene_viewpoint_pos_x, scene_viewpoint_pos_y, scene_viewpoint_pos_z,
+            scene_viewpoint_rot_x, scene_viewpoint_rot_y, scene_viewpoint_rot_z,
+            scene_viewpoint_targ_x, scene_viewpoint_targ_y, scene_viewpoint_targ_z,
+            scene_viewpoint_up_x, scene_viewpoint_up_y, scene_viewpoint_up_z
+        ) VALUES (
+            1, 
+            'Scene Y', 
+            0.0, 0.1, 0.2,
+            1.0, 1.1, 1.2,
+            2.0, 2.1, 2.2,
+            3.0, 3.1, 3.2
+        );
+
+        INSERT INTO query (query_id, query_qid, query_name, query_description) VALUES (0, '295', 'Query', 'Description');
+        INSERT INTO query (query_id, query_qid, query_name, query_description) VALUES (1, '291', 'Query', 'Description');
+        
+        INSERT INTO stylesheet (ssheet_id, ssheet_name, ssheet_description) VALUES (0, 'Stylesheet', 'Description');
+        INSERT INTO stylesheet (ssheet_id, ssheet_name, ssheet_description) VALUES (1, 'Stylesheet', 'Description');
+        
+        INSERT INTO asset_set (assetset_id, assetset_name, assetset_maintainer) VALUES (0, 'Asset Set', 'Maintainer');
+        INSERT INTO asset_set (assetset_id, assetset_name, assetset_maintainer) VALUES (1, 'Asset Set', 'Maintainer');
+    </insert>
+    
+
+    <insert id="prep_SceneFragmentDAO_deleteByScene">
+        DELETE FROM scene_fragment;
+        DELETE FROM scene;
+        
+        INSERT INTO scene 
+        (
+            scene_id, 
+            scene_name, 
+            scene_viewpoint_pos_x, scene_viewpoint_pos_y, scene_viewpoint_pos_z,
+            scene_viewpoint_rot_x, scene_viewpoint_rot_y, scene_viewpoint_rot_z,
+            scene_viewpoint_targ_x, scene_viewpoint_targ_y, scene_viewpoint_targ_z,
+            scene_viewpoint_up_x, scene_viewpoint_up_y, scene_viewpoint_up_z
+        ) VALUES (
+            0, 
+            'Scene A', 
+            0.0, 0.1, 0.2,
+            1.0, 1.1, 1.2,
+            2.0, 2.1, 2.2,
+            3.0, 3.1, 3.2
+        );
+        
+        INSERT INTO scene 
+        (
+            scene_id, 
+            scene_name, 
+            scene_viewpoint_pos_x, scene_viewpoint_pos_y, scene_viewpoint_pos_z,
+            scene_viewpoint_rot_x, scene_viewpoint_rot_y, scene_viewpoint_rot_z,
+            scene_viewpoint_targ_x, scene_viewpoint_targ_y, scene_viewpoint_targ_z,
+            scene_viewpoint_up_x, scene_viewpoint_up_y, scene_viewpoint_up_z
+        ) VALUES (
+            1, 
+            'Scene B', 
+            0.0, 0.1, 0.2,
+            1.0, 1.1, 1.2,
+            2.0, 2.1, 2.2,
+            3.0, 3.1, 3.2
+        );
+        
+        INSERT INTO query (query_id, query_qid, query_name, query_description) VALUES (0, '295', 'Query A', 'Query Description');
+              
+        INSERT INTO stylesheet (ssheet_id, ssheet_name, ssheet_description) VALUES (0, 'Stylesheet A', 'Description');
+        
+        INSERT INTO asset_set (assetset_id, assetset_name, assetset_maintainer) VALUES (0, 'Asset Set A', 'Maintainer');
+        
+        INSERT INTO scene_fragment (scenef_id, scenef_name, scenef_type, scenef_scene_id, scenef_ssheet_id, scenef_assetset_id, scenef_query_id, scenef_query_param_str) 
+            VALUES (0, 'Scene fragment Z', 0, 0, 0, 0, 0, 'Params Z');
+        INSERT INTO scene_fragment (scenef_id, scenef_name, scenef_type, scenef_scene_id, scenef_ssheet_id, scenef_assetset_id, scenef_query_id, scenef_query_param_str) 
+            VALUES (1, 'Scene fragment Y', 0, 0, 0, 0, 0, 'Params Y');
+        INSERT INTO scene_fragment (scenef_id, scenef_name, scenef_type, scenef_scene_id, scenef_ssheet_id, scenef_assetset_id, scenef_query_id, scenef_query_param_str) 
+            VALUES (2, 'Scene fragment X', 0, 1, 0, 0, 0, 'Params X');
+    </insert>
+    
+    
+    <insert id="prep_SceneFragmentDAO_listBySceneWithAssociations">
+        DELETE FROM scene_fragment;
+        DELETE FROM scene;
+        DELETE FROM asset_set;
+        DELETE FROM stylesheet;
+        DELETE FROM query;
+        
+        INSERT INTO scene 
+        (
+            scene_id, 
+            scene_name, 
+            scene_viewpoint_pos_x, scene_viewpoint_pos_y, scene_viewpoint_pos_z,
+            scene_viewpoint_rot_x, scene_viewpoint_rot_y, scene_viewpoint_rot_z,
+            scene_viewpoint_targ_x, scene_viewpoint_targ_y, scene_viewpoint_targ_z,
+            scene_viewpoint_up_x, scene_viewpoint_up_y, scene_viewpoint_up_z
+        ) VALUES (
+            0, 
+            'Scene A', 
+            0.0, 0.1, 0.2,
+            1.0, 1.1, 1.2,
+            2.0, 2.1, 2.2,
+            3.0, 3.1, 3.2
+        );
+        
+        INSERT INTO scene 
+        (
+            scene_id, 
+            scene_name, 
+            scene_viewpoint_pos_x, scene_viewpoint_pos_y, scene_viewpoint_pos_z,
+            scene_viewpoint_rot_x, scene_viewpoint_rot_y, scene_viewpoint_rot_z,
+            scene_viewpoint_targ_x, scene_viewpoint_targ_y, scene_viewpoint_targ_z,
+            scene_viewpoint_up_x, scene_viewpoint_up_y, scene_viewpoint_up_z
+        ) VALUES (
+            1, 
+            'Scene B', 
+            0.0, 0.1, 0.2,
+            1.0, 1.1, 1.2,
+            2.0, 2.1, 2.2,
+            3.0, 3.1, 3.2
+        );
+        
+        INSERT INTO query (query_id, query_qid, query_name, query_description) VALUES (0, '295', 'Query A', 'Description');
+        INSERT INTO query (query_id, query_qid, query_name, query_description) VALUES (1, '291', 'Query B', 'Description');
+              
+        INSERT INTO stylesheet (ssheet_id, ssheet_name, ssheet_description) VALUES (0, 'Stylesheet A', 'Description');
+        INSERT INTO stylesheet (ssheet_id, ssheet_name, ssheet_description) VALUES (1, 'Stylesheet B', 'Description');
+        
+        INSERT INTO asset_set (assetset_id, assetset_name, assetset_maintainer) VALUES (0, 'Asset Set A', 'Maintainer');
+        INSERT INTO asset_set (assetset_id, assetset_name, assetset_maintainer) VALUES (1, 'Asset Set B', 'Maintainer');
+        
+        INSERT INTO scene_fragment (scenef_id, scenef_name, scenef_type, scenef_scene_id, scenef_ssheet_id, scenef_assetset_id, scenef_query_id, scenef_query_param_str) 
+            VALUES (0, 'Scene fragment Z', 0, 0, 0, 0, 0, 'Params Z');
+        INSERT INTO scene_fragment (scenef_id, scenef_name, scenef_type, scenef_scene_id, scenef_ssheet_id, scenef_assetset_id, scenef_query_id, scenef_query_param_str) 
+            VALUES (1, 'Scene fragment Y', 0, 0, 1, 1, 1, 'Params Y');
+        INSERT INTO scene_fragment (scenef_id, scenef_name, scenef_type, scenef_scene_id, scenef_ssheet_id, scenef_assetset_id, scenef_query_id, scenef_query_param_str) 
+            VALUES (2, 'Scene fragment X', 0, 1, 0, 0, 0, 'Params X');
+    </insert>
+    
+    
+    
+    
+    <insert id="prep_SceneFragmentMemberDAO_crud">
+        DELETE FROM scene_fragment;
+        DELETE FROM scene;
+        DELETE FROM asset;
+        DELETE FROM asset_set;    
+        
+        INSERT INTO asset_set (assetset_id, assetset_name, assetset_maintainer) VALUES (0, 'Asset Set', 'Maintainer');
+        INSERT INTO asset (asset_id, asset_name, asset_entity_id, asset_x3d_filename, asset_obj_filename, asset_centroid_x, asset_centroid_y, asset_centroid_z, asset_max_x, asset_max_y, asset_max_z, asset_min_x, asset_min_y, asset_min_z, asset_assetset_id) VALUES (0, 'Asset', '1000', 'file.x3d', 'file.obj', '0.01', '0.02', '0.03', '0.11', '0.12', '0.13', '0.21', '0.22', '0.23', 0);        
+        INSERT INTO asset (asset_id, asset_name, asset_entity_id, asset_x3d_filename, asset_obj_filename, asset_centroid_x, asset_centroid_y, asset_centroid_z, asset_max_x, asset_max_y, asset_max_z, asset_min_x, asset_min_y, asset_min_z, asset_assetset_id) VALUES (1, 'Asset', '1000', 'file.x3d', 'file.obj', '0.01', '0.02', '0.03', '0.11', '0.12', '0.13', '0.21', '0.22', '0.23', 0);               
+
+        INSERT INTO scene 
+        (
+            scene_id, 
+            scene_name, 
+            scene_viewpoint_pos_x, scene_viewpoint_pos_y, scene_viewpoint_pos_z,
+            scene_viewpoint_rot_x, scene_viewpoint_rot_y, scene_viewpoint_rot_z,
+            scene_viewpoint_targ_x, scene_viewpoint_targ_y, scene_viewpoint_targ_z,
+            scene_viewpoint_up_x, scene_viewpoint_up_y, scene_viewpoint_up_z
+        ) VALUES (
+            0, 
+            'Scene', 
+            0.0, 0.1, 0.2,
+            1.0, 1.1, 1.2,
+            2.0, 2.1, 2.2,
+            3.0, 3.1, 3.2
+        );
+        
+        INSERT INTO scene_fragment (scenef_id, scenef_name, scenef_type, scenef_scene_id, scenef_ssheet_id, scenef_assetset_id, scenef_query_id, scenef_query_param_str) VALUES(0, 'Scene fragment', 0, 0, null, null, null, 'Params');        
+    </insert>    
+    
+    
+    
+    
+    <insert id="prep_SceneFragmentMemberDAO_deleteByFragment">
+        DELETE FROM scene_fragment_member;
+        DELETE FROM scene_fragment;
+        DELETE FROM scene;
+        DELETE FROM asset;
+        DELETE FROM asset_set;        
+    
+        INSERT INTO asset_set (assetset_id, assetset_name, assetset_maintainer) VALUES (0, 'Asset Set', 'Maintainer');
+        INSERT INTO asset (asset_id, asset_name, asset_entity_id, asset_x3d_filename, asset_obj_filename, asset_centroid_x, asset_centroid_y, asset_centroid_z, asset_max_x, asset_max_y, asset_max_z, asset_min_x, asset_min_y, asset_min_z, asset_assetset_id) VALUES (0, 'Asset', '1000', 'file.x3d', 'file.obj', '0.01', '0.02', '0.03', '0.11', '0.12', '0.13', '0.21', '0.22', '0.23', 0);        
+        
+        INSERT INTO scene 
+        (
+            scene_id, 
+            scene_name, 
+            scene_viewpoint_pos_x, scene_viewpoint_pos_y, scene_viewpoint_pos_z,
+            scene_viewpoint_rot_x, scene_viewpoint_rot_y, scene_viewpoint_rot_z,
+            scene_viewpoint_targ_x, scene_viewpoint_targ_y, scene_viewpoint_targ_z,
+            scene_viewpoint_up_x, scene_viewpoint_up_y, scene_viewpoint_up_z
+        ) VALUES (
+            0, 
+            'Scene', 
+            0.0, 0.1, 0.2,
+            1.0, 1.1, 1.2,
+            2.0, 2.1, 2.2,
+            3.0, 3.1, 3.2
+        );
+                                       
+        INSERT INTO scene_fragment (scenef_id, scenef_name, scenef_type, scenef_scene_id, scenef_ssheet_id, scenef_assetset_id, scenef_query_id, scenef_query_param_str) VALUES(0, 'Scene fragment', 0, 0, null, null, null, 'Params');
+        INSERT INTO scene_fragment (scenef_id, scenef_name, scenef_type, scenef_scene_id, scenef_ssheet_id, scenef_assetset_id, scenef_query_id, scenef_query_param_str) VALUES(1, 'Scene fragment', 0, 0, null, null, null, 'Params');
+        
+        INSERT INTO scene_fragment_member 
+        (
+            scenefm_id, scenefm_entity_id, scenefm_entity_name, scenefm_visible, 
+            scenefm_transform_pos_x, scenefm_transform_pos_y, scenefm_transform_pos_z, scenefm_transform_rot_x, scenefm_transform_rot_y, scenefm_transform_rot_z, 
+            scenefm_mtl_alpha, scenefm_mtl_ambient, scenefm_mtl_diffuse, scenefm_mtl_emissive, scenefm_mtl_specular, scenefm_mtl_shininess, 
+            scenefm_scenef_id, scenefm_asset_id
+        ) VALUES (
+            0, 20, 'Member Z', true, 
+            1.0, 2.0, 3.0, 4.0, 5.0, 6.0,
+            7.0, '#ff0000', '#ff0001', '#ff0002', '#ff0003', 0,
+            0, 0
+        );
+        INSERT INTO scene_fragment_member 
+        (
+            scenefm_id, scenefm_entity_id, scenefm_entity_name, scenefm_visible, 
+            scenefm_transform_pos_x, scenefm_transform_pos_y, scenefm_transform_pos_z, scenefm_transform_rot_x, scenefm_transform_rot_y, scenefm_transform_rot_z, 
+            scenefm_mtl_alpha, scenefm_mtl_ambient, scenefm_mtl_diffuse, scenefm_mtl_emissive, scenefm_mtl_specular, scenefm_mtl_shininess, 
+            scenefm_scenef_id, scenefm_asset_id
+        ) VALUES (
+            1, 20, 'Member Y', true,
+            1.1, 2.1, 3.1, 4.1, 5.1, 6.1,
+            7.1, '#00ff00', '#00ff01', '#00ff02', '#00ff03', 5,
+            0, 0
+        );
+        INSERT INTO scene_fragment_member 
+        (
+            scenefm_id, scenefm_entity_id, scenefm_entity_name, scenefm_visible, 
+            scenefm_transform_pos_x, scenefm_transform_pos_y, scenefm_transform_pos_z, scenefm_transform_rot_x, scenefm_transform_rot_y, scenefm_transform_rot_z, 
+            scenefm_mtl_alpha, scenefm_mtl_ambient, scenefm_mtl_diffuse, scenefm_mtl_emissive, scenefm_mtl_specular, scenefm_mtl_shininess, 
+            scenefm_scenef_id, scenefm_asset_id
+        ) VALUES (
+            2, 20, 'Member X', true,
+            1.2, 2.2, 3.2, 4.2, 5.2, 6.2,
+            7.2, '#0000f0', '#0000f1', '#0000f2', '#0000f3', 10,
+            0, 0
+        );
+        INSERT INTO scene_fragment_member 
+        (
+            scenefm_id, scenefm_entity_id, scenefm_entity_name, scenefm_visible, 
+            scenefm_transform_pos_x, scenefm_transform_pos_y, scenefm_transform_pos_z, scenefm_transform_rot_x, scenefm_transform_rot_y, scenefm_transform_rot_z, 
+            scenefm_mtl_alpha, scenefm_mtl_ambient, scenefm_mtl_diffuse, scenefm_mtl_emissive, scenefm_mtl_specular, scenefm_mtl_shininess, 
+            scenefm_scenef_id, scenefm_asset_id
+        ) VALUES (
+            3, 20, 'Member W', true,
+            1.3, 2.3, 3.3, 4.3, 5.3, 6.3,
+            7.3, '#000000', '#000001', '#000002', '#000003', 15,
+            1, 0
+        );
+    </insert>   
+    
+    
+    
+    
+    <insert id="prep_SceneFragmentMemberDAO_listByFragment">
+        DELETE FROM scene_fragment_member;
+        DELETE FROM scene_fragment;
+        DELETE FROM scene;
+        DELETE FROM asset;
+        DELETE FROM asset_set;
+    
+        INSERT INTO asset_set (assetset_id, assetset_name, assetset_maintainer) VALUES (0, 'Asset Set', 'Maintainer');
+        INSERT INTO asset (asset_id, asset_name, asset_entity_id, asset_x3d_filename, asset_obj_filename, asset_centroid_x, asset_centroid_y, asset_centroid_z, asset_max_x, asset_max_y, asset_max_z, asset_min_x, asset_min_y, asset_min_z, asset_assetset_id) VALUES (0, 'Asset', '1000', 'file.x3d', 'file.obj', '0.01', '0.02', '0.03', '0.11', '0.12', '0.13', '0.21', '0.22', '0.23', 0);        
+        
+        INSERT INTO scene 
+        (
+            scene_id, 
+            scene_name, 
+            scene_viewpoint_pos_x, scene_viewpoint_pos_y, scene_viewpoint_pos_z,
+            scene_viewpoint_rot_x, scene_viewpoint_rot_y, scene_viewpoint_rot_z,
+            scene_viewpoint_targ_x, scene_viewpoint_targ_y, scene_viewpoint_targ_z,
+            scene_viewpoint_up_x, scene_viewpoint_up_y, scene_viewpoint_up_z
+        ) VALUES (
+            0, 
+            'Scene', 
+            0.0, 0.1, 0.2,
+            1.0, 1.1, 1.2,
+            2.0, 2.1, 2.2,
+            3.0, 3.1, 3.2
+        );
+                                       
+        INSERT INTO scene_fragment (scenef_id, scenef_name, scenef_type, scenef_scene_id, scenef_ssheet_id, scenef_assetset_id, scenef_query_id, scenef_query_param_str) VALUES(0, 'Scene fragment', 0, 0, null, null, null, 'Params');
+        INSERT INTO scene_fragment (scenef_id, scenef_name, scenef_type, scenef_scene_id, scenef_ssheet_id, scenef_assetset_id, scenef_query_id, scenef_query_param_str) VALUES(1, 'Scene fragment', 0, 0, null, null, null, 'Params');
+        
+        INSERT INTO scene_fragment_member 
+        (
+            scenefm_id, scenefm_entity_id, scenefm_entity_name, scenefm_visible, 
+            scenefm_transform_pos_x, scenefm_transform_pos_y, scenefm_transform_pos_z, scenefm_transform_rot_x, scenefm_transform_rot_y, scenefm_transform_rot_z, 
+            scenefm_mtl_alpha, scenefm_mtl_ambient, scenefm_mtl_diffuse, scenefm_mtl_emissive, scenefm_mtl_specular, scenefm_mtl_shininess, 
+            scenefm_scenef_id, scenefm_asset_id
+        ) VALUES (
+            0, 20, 'Member Z', true, 
+            1.0, 2.0, 3.0, 4.0, 5.0, 6.0,
+            7.0, '#ff0000', '#ff0001', '#ff0002', '#ff0003', 0,
+            0, 0
+        );
+        INSERT INTO scene_fragment_member 
+        (
+            scenefm_id, scenefm_entity_id, scenefm_entity_name, scenefm_visible, 
+            scenefm_transform_pos_x, scenefm_transform_pos_y, scenefm_transform_pos_z, scenefm_transform_rot_x, scenefm_transform_rot_y, scenefm_transform_rot_z, 
+            scenefm_mtl_alpha, scenefm_mtl_ambient, scenefm_mtl_diffuse, scenefm_mtl_emissive, scenefm_mtl_specular, scenefm_mtl_shininess, 
+            scenefm_scenef_id, scenefm_asset_id
+        ) VALUES (
+            1, 20, 'Member Y', true,
+            1.1, 2.1, 3.1, 4.1, 5.1, 6.1,
+            7.1, '#00ff00', '#00ff01', '#00ff02', '#00ff03', 5,
+            0, 0
+        );
+        INSERT INTO scene_fragment_member 
+        (
+            scenefm_id, scenefm_entity_id, scenefm_entity_name, scenefm_visible, 
+            scenefm_transform_pos_x, scenefm_transform_pos_y, scenefm_transform_pos_z, scenefm_transform_rot_x, scenefm_transform_rot_y, scenefm_transform_rot_z, 
+            scenefm_mtl_alpha, scenefm_mtl_ambient, scenefm_mtl_diffuse, scenefm_mtl_emissive, scenefm_mtl_specular, scenefm_mtl_shininess, 
+            scenefm_scenef_id, scenefm_asset_id
+        ) VALUES (
+            2, 20, 'Member X', true,
+            1.2, 2.2, 3.2, 4.2, 5.2, 6.2,
+            7.2, '#0000f0', '#0000f1', '#0000f2', '#0000f3', 10,
+            0, 0
+        );
+        INSERT INTO scene_fragment_member 
+        (
+            scenefm_id, scenefm_entity_id, scenefm_entity_name, scenefm_visible, 
+            scenefm_transform_pos_x, scenefm_transform_pos_y, scenefm_transform_pos_z, scenefm_transform_rot_x, scenefm_transform_rot_y, scenefm_transform_rot_z, 
+            scenefm_mtl_alpha, scenefm_mtl_ambient, scenefm_mtl_diffuse, scenefm_mtl_emissive, scenefm_mtl_specular, scenefm_mtl_shininess, 
+            scenefm_scenef_id, scenefm_asset_id
+        ) VALUES (
+            3, 20, 'Member W', true,
+            1.3, 2.3, 3.3, 4.3, 5.3, 6.3,
+            7.3, '#000000', '#000001', '#000002', '#000003', 15,
+            1, 0
+        );
+    </insert>  
+</mapper>

@@ -1,0 +1,20 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.memehazard.wheel.activity.test.TestDAO_ActivityManager">
+
+    <cache />
+    
+    <select id="countActivityInstances" resultType="integer">
+        select count(*) from activity_instance
+    </select>
+    
+    <select id="countActivityTemplates" resultType="integer">
+        select count(*) from activity_template
+    </select>
+    
+    <select id="countActivityTemplateParameters" resultType="integer">
+        select count(*) from activity_template_param
+    </select>
+    
+</mapper>

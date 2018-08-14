@@ -1,0 +1,262 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.memehazard.wheel.scene.dao.SceneFragmentMemberDAO">
+    <cache />
+
+    <resultMap id="sceneFragmentMember" type="org.memehazard.wheel.scene.model.SceneFragmentMember">
+        <id property="id" column="scenefm_id" />
+        <result property="visible" column="scenefm_visible" />
+        <result property="fragmentId" column="scenefm_scenef_id" />
+        <result property="assetId" column="scenefm_asset_id" />
+
+        <association property="transform" javaType="org.memehazard.wheel.scene.model.Transform">
+            <result property="positionX" column="scenefm_transform_pos_x"/>
+            <result property="positionY" column="scenefm_transform_pos_y"/>
+            <result property="positionZ" column="scenefm_transform_pos_z"/>                        
+            <result property="rotationX" column="scenefm_transform_rot_x"/>
+            <result property="rotationY" column="scenefm_transform_rot_y"/>
+            <result property="rotationZ" column="scenefm_transform_rot_z"/>
+        </association>
+                
+        <association property="style" javaType="org.memehazard.wheel.style.model.Style">
+            <result property="alpha" column="scenefm_mtl_alpha" />        
+            <result property="ambient" column="scenefm_mtl_ambient" />
+            <result property="diffuse" column="scenefm_mtl_diffuse" />
+            <result property="emissive" column="scenefm_mtl_emissive" />
+            <result property="priority" column="scenefm_mtl_priority" />
+            <result property="shininess" column="scenefm_mtl_shininess" />
+            <result property="specular" column="scenefm_mtl_specular" />
+            <result property="tag" column="scenefm_mtl_tag" />
+        </association>
+        
+        <association property="entity" javaType="org.memehazard.wheel.query.model.Entity">
+            <result property="id" column="scenefm_entity_id"/>
+            <result property="name" column="scenefm_entity_name"/>
+        </association>
+    </resultMap>
+
+    <resultMap id="sceneFragmentMemberWithAsset" type="org.memehazard.wheel.scene.model.SceneFragmentMember">
+        <id property="id" column="scenefm_id" />
+        <result property="visible" column="scenefm_visible" />
+        <result property="fragmentId" column="scenefm_scenef_id" />
+
+        <association property="transform" javaType="org.memehazard.wheel.scene.model.Transform">
+            <result property="positionX" column="scenefm_transform_pos_x"/>
+            <result property="positionY" column="scenefm_transform_pos_y"/>
+            <result property="positionZ" column="scenefm_transform_pos_z"/>                        
+            <result property="rotationX" column="scenefm_transform_rot_x"/>
+            <result property="rotationY" column="scenefm_transform_rot_y"/>
+            <result property="rotationZ" column="scenefm_transform_rot_z"/>                        
+        </association>
+                
+        <association property="asset" javaType="org.memehazard.wheel.asset.model.Asset">
+            <result property="id" column="asset_id" />
+            <result property="name" column="asset_name"/>
+            <result property="objFilename" column="asset_obj_filename" />
+            
+            <association property="stats" javaType="org.memehazard.wheel.asset.model.Asset3DStatistics">
+                <result property="max_x" column="asset_max_x"/>
+                <result property="max_y" column="asset_max_y"/>
+                <result property="max_z" column="asset_max_z"/>
+                <result property="min_x" column="asset_min_x"/>
+                <result property="min_y" column="asset_min_y"/>
+                <result property="min_z" column="asset_min_z"/>
+                <result property="centroid_x" column="asset_centroid_x"/>
+                <result property="centroid_y" column="asset_centroid_y"/>
+                <result property="centroid_z" column="asset_centroid_z"/>
+            </association>
+        
+            <collection property="styleTags" ofType="string" >
+                <result column="astag_tag"/>
+            </collection>
+        </association>
+        
+        <association property="style" javaType="org.memehazard.wheel.style.model.Style">
+            <result property="alpha" column="scenefm_mtl_alpha" />        
+            <result property="ambient" column="scenefm_mtl_ambient" />
+            <result property="diffuse" column="scenefm_mtl_diffuse" />
+            <result property="emissive" column="scenefm_mtl_emissive" />
+            <result property="priority" column="scenefm_mtl_priority" />
+            <result property="shininess" column="scenefm_mtl_shininess" />
+            <result property="specular" column="scenefm_mtl_specular" />
+            <result property="tag" column="scenefm_mtl_tag" />
+        </association>     
+           
+        <association property="entity" javaType="org.memehazard.wheel.query.model.Entity">
+            <result property="id" column="scenefm_entity_id"/>
+            <result property="name" column="scenefm_entity_name"/>
+        </association>
+    </resultMap>
+
+
+    <insert id="add" parameterType="org.memehazard.wheel.scene.model.SceneFragmentMember">
+        <selectKey keyProperty="id" resultType="int" order="BEFORE">
+            select nextval('scene_fragment_member_scenefm_id_seq'::regclass)
+        </selectKey>
+        
+        INSERT INTO scene_fragment_member
+        (
+            scenefm_id,
+            scenefm_entity_id,            
+            scenefm_entity_name,
+            scenefm_visible,
+            scenefm_transform_pos_x,
+            scenefm_transform_pos_y,
+            scenefm_transform_pos_z,
+            scenefm_transform_rot_x,
+            scenefm_transform_rot_y,
+            scenefm_transform_rot_z,
+            scenefm_mtl_alpha,
+            scenefm_mtl_ambient,
+            scenefm_mtl_diffuse,
+            scenefm_mtl_emissive,
+            scenefm_mtl_shininess,
+            scenefm_mtl_specular,
+            scenefm_asset_id,
+            scenefm_scenef_id
+        ) VALUES (
+            #{id},
+            #{entity.id},
+            #{entity.name},            
+            #{visible},
+            #{transform.positionX},
+            #{transform.positionY},
+            #{transform.positionZ},
+            #{transform.rotationX},
+            #{transform.rotationY},
+            #{transform.rotationZ},
+            #{style.alpha},
+            #{style.ambient},
+            #{style.diffuse},
+            #{style.emissive},
+            #{style.shininess},
+            #{style.specular},
+            #{asset.id},
+            #{fragmentId}
+        );
+    </insert>
+            
+    
+    <delete id="delete" parameterType="integer">
+        DELETE FROM scene_fragment_member WHERE scenefm_id = #{id}
+    </delete>
+        
+    
+
+
+    <delete id="deleteByFragment" parameterType="integer">
+        DELETE FROM scene_fragment_member WHERE scenefm_scenef_id = #{id}
+    </delete>
+    
+    
+    <select id="get" parameterType="integer" resultMap="sceneFragmentMember">
+        SELECT
+            scenefm_id,
+            scenefm_entity_id,            
+            scenefm_entity_name,
+            scenefm_visible,
+            scenefm_transform_pos_x,
+            scenefm_transform_pos_y,
+            scenefm_transform_pos_z,
+            scenefm_transform_rot_x,
+            scenefm_transform_rot_y,
+            scenefm_transform_rot_z,
+            scenefm_mtl_alpha,
+            scenefm_mtl_ambient,
+            scenefm_mtl_diffuse,
+            scenefm_mtl_emissive,
+            scenefm_mtl_shininess,
+            scenefm_mtl_specular,
+            scenefm_scenef_id,
+            scenefm_asset_id
+        FROM scene_fragment_member
+        WHERE scenefm_id = #{id}
+    </select>
+    
+
+    <select id="listAll" parameterType="integer" resultMap="sceneFragmentMember">
+        SELECT
+            scenefm_id,
+            scenefm_entity_id,            
+            scenefm_entity_name,
+            scenefm_visible,
+            scenefm_transform_pos_x,
+            scenefm_transform_pos_y,
+            scenefm_transform_pos_z,
+            scenefm_transform_rot_x,
+            scenefm_transform_rot_y,
+            scenefm_transform_rot_z,
+            scenefm_mtl_alpha,
+            scenefm_mtl_ambient,
+            scenefm_mtl_diffuse,
+            scenefm_mtl_emissive,
+            scenefm_mtl_shininess,
+            scenefm_mtl_specular,
+            scenefm_scenef_id
+        FROM scene_fragment_member
+        ORDER BY scenefm_entity_name
+    </select>
+    
+
+    <select id="listByFragment" parameterType="integer" resultMap="sceneFragmentMemberWithAsset">
+        SELECT
+            scenefm_id,
+            scenefm_entity_id,            
+            scenefm_entity_name,
+            scenefm_visible,
+            scenefm_transform_pos_x,
+            scenefm_transform_pos_y,
+            scenefm_transform_pos_z,
+            scenefm_transform_rot_x,
+            scenefm_transform_rot_y,
+            scenefm_transform_rot_z,
+            scenefm_mtl_alpha,
+            scenefm_mtl_ambient,
+            scenefm_mtl_diffuse,
+            scenefm_mtl_emissive,
+            scenefm_mtl_shininess,
+            scenefm_mtl_specular,
+            scenefm_scenef_id,
+            asset_id,
+            asset_name, 
+            asset_obj_filename, 
+            asset_x3d_filename, 
+            asset_max_x, 
+            asset_max_y, 
+            asset_max_z, 
+            asset_min_x, 
+            asset_min_y, 
+            asset_min_z, 
+            asset_centroid_x, 
+            asset_centroid_y, 
+            asset_centroid_z,
+            astag_tag
+        FROM scene_fragment_member
+        LEFT OUTER JOIN asset on scenefm_asset_id = asset_id
+        LEFT OUTER JOIN asset_styletag ON astag_asset_id = asset_id 
+        WHERE scenefm_scenef_id = #{id}
+        ORDER BY scenefm_entity_name
+    </select>
+        
+        
+    <update id="update">
+        UPDATE scene_fragment_member SET
+            scenefm_entity_id = #{entity.id},
+            scenefm_entity_name = #{entity.name},            
+            scenefm_visible = #{visible},
+            scenefm_transform_pos_x = #{transform.positionX},
+            scenefm_transform_pos_y = #{transform.positionY},
+            scenefm_transform_pos_z = #{transform.positionZ},
+            scenefm_transform_rot_x = #{transform.rotationX},
+            scenefm_transform_rot_y = #{transform.rotationY},
+            scenefm_transform_rot_z = #{transform.rotationZ},
+            scenefm_mtl_alpha = #{style.alpha},
+            scenefm_mtl_ambient = #{style.ambient},
+            scenefm_mtl_diffuse = #{style.diffuse},
+            scenefm_mtl_emissive = #{style.emissive},
+            scenefm_mtl_shininess = #{style.shininess},
+            scenefm_mtl_specular = #{style.specular}
+        WHERE scenefm_id = #{id}
+    </update>
+</mapper>

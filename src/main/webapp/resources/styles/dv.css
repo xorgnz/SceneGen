@@ -1,0 +1,363 @@
+    /* DV - UI Structure ****************************************************/
+    div#dv_ui_container
+    {
+        margin: 0 auto;
+        padding: 0px;
+        height: 100%;
+        width: 100%;
+        pointer-events: none;
+    }
+    div#dv_ui_center_panel
+    {
+        position:relative;
+        z-index:5;
+        margin-left: 150px;
+        margin-right: 300px;
+        height: 100%;
+        pointer-events: none;
+    }
+    div#dv_ui_left_panel
+    {
+        float: left;
+        width: 330px;
+        height: 98%;
+        overflow-y: auto;
+        padding: 6px;
+        position: relative;
+        z-index: 5;
+        pointer-events: none;
+    }
+    div#dv_ui_right_panel
+    {
+        float: right;
+        width: 480px;
+        height: 98%;
+        overflow-y: auto;
+        padding: 6px;
+        position:relative;
+        z-index:5;
+        pointer-events: none;
+    }
+    div#dv_left_buttons_wrapper
+    {
+        bottom: 0px;
+        position: absolute;
+    }
+
+
+
+    /* DV - General panels ***************************************************/
+    h1
+    {
+        font-size: 24px;
+        font-weight: bold;
+        line-height: 28px;
+        margin: 6px 0 12px 0px;
+    }
+
+
+
+
+    /* DV - General forms ****************************************************/
+    ul.ui-autocomplete
+    {
+        overflow-y: scroll;
+        overflow-x: hidden;
+        height: 400px;
+        z-index: 10;
+        width: 256px;
+        font-size: 12px;
+    }
+
+
+
+
+    /* DV - Command Panel ************************************/
+    div#dv_command
+    {
+        width: 458px;
+        color: #fff;
+        border: #ffffff solid 1px;
+        padding: 4px;
+        font-family: Verdana, sans serif;
+        font-size: 12px;
+        line-height: normal;
+        background: rgba(64, 64, 64, 0.6);
+        pointer-events: auto;
+        margin-bottom: 8px;
+    }
+    div#dv_command div.box
+    {
+        vertical-align: top;
+        border: darkgrey solid 1px;
+        margin: 12px 0px 0px 0px;
+        background-color: #404040;
+        padding: 4px;
+    }
+    div#dv_command div.box div.workingnotification
+    {
+        float: right;
+        background-color: darkgoldenrod;
+        width: 60px;
+        height: 16px;
+        margin: 4px 4px 0px 0px;
+        text-align: center;
+        padding: 3px 6px 3px 3px;
+    }
+    div#dv_command div.box div.label
+    {
+        width: 118px;
+        display: inline-block;
+        padding: 4px;
+        vertical-align: top;
+
+        background-color: #606060;
+        border: 1px solid white;
+        margin: 0px 2px 4px 0px;
+    }
+    div#dv_command div.box div.current
+    {
+        width: 306px;
+        display: inline-block;
+        padding: 4px;
+        background-color: #202020;
+        border: 1px solid white;
+        margin: 0px 0px 8px 2px;
+    }
+    div#dv_command div.box h2
+    {
+        margin: 4px 0px 10px 0px;
+    }
+    div#dv_command div.box select
+    {
+        width: 100%;
+    }
+    div#dv_command div.box button
+    {
+        width: 100%;
+        height: 26px;
+        margin: 8px 0px 0px 0px;
+        padding: 4px;
+
+        border-top: 2px solid white;
+        border-left: 2px solid white;
+        border-right: 2px solid grey;
+        border-bottom: 2px solid grey;
+
+        cursor: pointer;
+
+        background-color: #080047;
+        color: #ffffff;
+        font-size: 12px;
+    }
+    div#dv_command div.box button:hover
+    {
+        background-color: #160878;
+    }
+    div#dv_command div.box button.disabled
+    {
+        height: 26px;
+        background-color: #202030;
+        border: 2px solid grey;
+        color: #a0a0a0;
+    }
+    div#dv_command div.box button.disabled:hover
+    {
+        background-color: #202030;
+    }
+    div#dv_command div.box fieldset.description
+    {
+        width: 426px;
+        min-height: 40px;
+        margin-top: 8px;
+        padding: 8px;
+        border: 1px solid white;
+
+        background-color: #202020;
+        color: #ffffff;
+    }
+    div#dv_command div.box fieldset.query_params
+    {
+        margin-top: 4px;
+    }
+    div#dv_command div.box fieldset.query_params label
+    {
+        vertical-align: top;
+        width: 120px;
+        display: inline-block;
+        margin: 4px 0px;
+        padding: 2px;
+        background-color: #300000;
+        height: 16px;
+        border-top: 2px solid white;
+        border-bottom: 2px solid #606060;
+    }
+    div#dv_command div.box fieldset.query_params input
+    {
+        vertical-align: top;
+        line-height: 18px;
+        margin: 4px 2px;
+        display: inline-block;
+        width: 290px;
+    }
+
+
+
+
+    /* DV - Info Panel ************************************/
+    div#dv_info
+    {
+        width: 458px;
+        color: #fff;
+        border: #ffffff solid 1px;
+        padding: 4px;
+        font-family: Verdana, sans serif;
+        font-size: 12px;
+        line-height: normal;
+        background: rgba(64, 64, 64, 0.6);
+        pointer-events: auto;
+        margin-bottom: 8px;
+    }
+    div#dv_info table
+    {
+        border: 1px solid white;
+    }
+    div#dv_info table th
+    {
+        text-align: left;
+        background-color: #300000;
+        border-bottom: 2px solid #606060;
+    }
+    div#dv_info table th.field
+    {
+        width: 176px;
+    }
+    div#dv_info table th.value
+    {
+        width: 270px;
+    }
+    div#dv_info table tr.even
+    {
+        background-color: #404040;
+    }
+    div#dv_info table tr.odd
+    {
+        background-color: #303030;
+    }
+
+
+
+
+    /* DV - Legend Panel ********************************************************/
+    div#dv_legend
+    {
+        width: 308px;
+        color: #fff;
+        border: #ffffff solid 1px;
+        padding: 4px;
+        font-family: Verdana, sans serif;
+        font-size: 12px;
+        line-height: normal;
+        background: rgba(64, 64, 64, 0.6);
+        pointer-events: auto;
+        margin-bottom: 8px;
+    }
+    div#dv_legend div.swatch
+    {
+        width: 60px;
+        height: 40px;
+        border: 1px solid white;
+        margin-top: 4px;
+        vertical-align: top;
+
+        display: inline-block;
+        background-color: black;
+    }
+    div#dv_legend div.swatch canvas
+    {
+        position: static;
+    }
+    div#dv_legend div.label
+    {
+        width: 236px;
+        height: 32px;
+        padding: 4px;
+        border: 1px solid white;
+        margin-top: 4px;
+
+        display: inline-block;
+        background-color: black;
+    }
+
+
+
+
+
+    /* DV - Left UI buttons *****************************************************/
+    div#dv_save_button
+    {
+        width: 70px;
+        margin-bottom: 10px;
+        margin-left: 10px;
+        display: inline-block;
+
+        pointer-events: auto;
+        cursor: pointer;
+        text-align: center;
+
+        background-color: lightblue;
+        border: white 1px solid;
+        font-size: 12px;
+        padding: 4px;
+    }
+    div#dv_save_button:hover
+    {
+        background-color: rgb(122, 205, 232);
+    }
+    div#dv_save_wrap
+    {
+        width: 100%;
+        height: 0px;
+    }
+    div#dv_save_panel
+    {
+        position: relative;
+        top: 100px;
+        display: none;
+
+        margin: 0 auto;
+        padding: 4px;
+        width: 600px;
+        z-index: 10;
+        pointer-events: auto;
+
+        background-color: #bbb;
+        font-size: 12px;
+        font-family: Verdana, sans serif;
+        border-radius: 12px;
+        border: 4px solid #069;
+    }
+    div#dv_save_panel h1
+    {
+        margin: 8px 0px 0px 0px;
+    }
+    div#dv_save_panel h2
+    {
+        margin: 8px 0px 0px 0px;
+    }
+    div#dv_save_panel div.glue
+    {
+        text-align: center;
+        border: grey solid 1px;
+        margin: 8px 0px;
+        padding: 4px;
+    }
+    div#dv_save_panel div.glue select
+    {
+        margin: 0px 0px 4px 0px;
+    }
+    div#dv_save_panel div.working_notification
+    {
+        margin: 4px 0px;
+    }
+

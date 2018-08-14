@@ -1,0 +1,46 @@
+@CHARSET "ISO-8859-1";
+
+body,html {
+    height: 100%;
+    width: 100%;
+    background-color: #fff;
+    margin: 0px;
+}
+
+#frame-wrapper {
+    width: 1220px;
+    height: 100%;
+    padding: 0px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    margin-left: auto;
+    margin-right: auto;
+    overflow: hidden;
+}
+
+#frame-nav {
+    width: 1208px;
+    height: 170px;
+    padding: 0px 6px;
+    border: 0;
+}
+
+#frame-main {
+    width: 807px;
+    height: 80%;
+    margin: 0px;
+    padding: 0px 6px;
+    border-top: 0;
+    border-left: 0;
+    border-bottom: 0;
+    border-right: 1px solid #aaa;
+}
+
+#frame-side {
+    float: right;
+    width: 388px;
+    height: 80%;
+    margin: 0px;
+    padding: 0px 6px;
+    border: 0;
+}

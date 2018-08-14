@@ -1,0 +1,127 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.memehazard.wheel.scene.dao.SceneDAO">
+
+    <cache />
+    
+
+    <resultMap id="scene" type="org.memehazard.wheel.scene.model.Scene">
+        <id property="id" column="scene_id" />
+        <result property="name" column="scene_name" />
+                        
+        <association property="viewpoint" javaType="org.memehazard.wheel.viewer.model.Viewpoint">
+            <association property="position" javaType="org.memehazard.wheel.core.math.Vector3d">
+                <result property="x" column="scene_viewpoint_pos_x"/>
+                <result property="y" column="scene_viewpoint_pos_y"/>
+                <result property="z" column="scene_viewpoint_pos_z"/>
+            </association>
+            <association property="rotation" javaType="org.memehazard.wheel.core.math.Vector3d">
+                <result property="x" column="scene_viewpoint_rot_x"/>
+                <result property="y" column="scene_viewpoint_rot_y"/>
+                <result property="z" column="scene_viewpoint_rot_z"/>
+            </association>
+            <association property="target" javaType="org.memehazard.wheel.core.math.Vector3d">
+                <result property="x" column="scene_viewpoint_targ_x"/>
+                <result property="y" column="scene_viewpoint_targ_y"/>
+                <result property="z" column="scene_viewpoint_targ_z"/>
+            </association>
+            <association property="up" javaType="org.memehazard.wheel.core.math.Vector3d">
+                <result property="x" column="scene_viewpoint_up_x"/>
+                <result property="y" column="scene_viewpoint_up_y"/>
+                <result property="z" column="scene_viewpoint_up_z"/>
+            </association>
+        </association>        
+    </resultMap>
+    
+    
+    <resultMap id="sceneWithFragments" type="org.memehazard.wheel.scene.model.Scene">
+        <id property="id" column="scene_id" />
+        <result property="name" column="scene_name" />
+        
+        <collection property="fragments" javaType="org.memehazard.wheel.scene.model.SceneFragment">
+            <result property="id" column="scenef_id" />
+            <result property="name" column="scenef_name" />
+            <result property="queryParamString" column="scenef_query_param_str" />
+            <result property="type" column="scenef_type" />
+        </collection>
+    </resultMap>
+
+
+    <insert id="add" parameterType="org.memehazard.wheel.scene.model.Scene">
+        <selectKey keyProperty="id" resultType="int" order="BEFORE">
+            select nextval('scene_scene_id_seq'::regclass)
+        </selectKey>
+        
+        INSERT INTO scene 
+        (
+            scene_id,
+            scene_name,
+            scene_viewpoint_pos_x, scene_viewpoint_pos_y, scene_viewpoint_pos_z,
+            scene_viewpoint_rot_x, scene_viewpoint_rot_y, scene_viewpoint_rot_z,
+            scene_viewpoint_targ_x, scene_viewpoint_targ_y, scene_viewpoint_targ_z,
+            scene_viewpoint_up_x, scene_viewpoint_up_y, scene_viewpoint_up_z
+        )
+        VALUES 
+        (
+            #{id}, 
+            #{name}, 
+            #{viewpoint.position.x}, #{viewpoint.position.y}, #{viewpoint.position.z},
+            #{viewpoint.rotation.x}, #{viewpoint.rotation.y}, #{viewpoint.rotation.z},
+            #{viewpoint.target.x}, #{viewpoint.target.y}, #{viewpoint.target.z},
+            #{viewpoint.up.x}, #{viewpoint.up.y}, #{viewpoint.up.z}
+        );
+    </insert>
+            
+    
+    <delete id="delete" parameterType="integer">
+        DELETE FROM scene WHERE scene_id = #{id}
+    </delete>
+    
+    
+    <select id="get" parameterType="integer" resultMap="scene">
+        SELECT
+            scene_id,
+            scene_name,
+            scene_viewpoint_pos_x, scene_viewpoint_pos_y, scene_viewpoint_pos_z,
+            scene_viewpoint_rot_x, scene_viewpoint_rot_y, scene_viewpoint_rot_z,
+            scene_viewpoint_targ_x, scene_viewpoint_targ_y, scene_viewpoint_targ_z,
+            scene_viewpoint_up_x, scene_viewpoint_up_y, scene_viewpoint_up_z
+
+        FROM scene
+        WHERE scene_id = #{id}
+    </select>
+
+
+    <select id="listAll" parameterType="string" resultMap="scene">
+        SELECT
+            scene_id,
+            scene_name,
+            scene_viewpoint_pos_x, scene_viewpoint_pos_y, scene_viewpoint_pos_z,
+            scene_viewpoint_rot_x, scene_viewpoint_rot_y, scene_viewpoint_rot_z,
+            scene_viewpoint_targ_x, scene_viewpoint_targ_y, scene_viewpoint_targ_z,
+            scene_viewpoint_up_x, scene_viewpoint_up_y, scene_viewpoint_up_z
+        FROM scene
+        ORDER BY scene_name
+    </select>
+    
+    
+    <update id="update">
+        UPDATE scene SET
+            scene_name              = #{name},
+            scene_viewpoint_pos_x   = #{viewpoint.position.x},
+            scene_viewpoint_pos_y   = #{viewpoint.position.y},
+            scene_viewpoint_pos_z   = #{viewpoint.position.z},
+            scene_viewpoint_rot_x   = #{viewpoint.rotation.x},
+            scene_viewpoint_rot_y   = #{viewpoint.rotation.y},
+            scene_viewpoint_rot_z   = #{viewpoint.rotation.z},
+            scene_viewpoint_targ_x  = #{viewpoint.target.x},
+            scene_viewpoint_targ_y  = #{viewpoint.target.y},
+            scene_viewpoint_targ_z  = #{viewpoint.target.z},
+            scene_viewpoint_up_x    = #{viewpoint.up.x},
+            scene_viewpoint_up_y    = #{viewpoint.up.y},
+            scene_viewpoint_up_z    = #{viewpoint.up.z}
+        WHERE scene_id = #{id}
+    </update>
+</mapper>
+

@@ -1,0 +1,18 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.memehazard.wheel.textCompletion.test.TextCompletionTestDAO">
+
+    <cache />
+    
+    <insert id="createTestData">
+        DELETE FROM text_completion;
+        
+        INSERT INTO text_completion (tc_value) VALUES ('zvalue_4');
+        INSERT INTO text_completion (tc_value) VALUES ('value_2');
+        INSERT INTO text_completion (tc_value) VALUES ('value_1');
+        INSERT INTO text_completion (tc_value) VALUES ('value_3');
+        INSERT INTO text_completion (tc_value) VALUES ('something_else_5');
+    </insert>
+    
+</mapper>

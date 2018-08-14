@@ -1,0 +1,100 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.memehazard.wheel.rbac.dao.PermissionDAO">
+
+    <cache />
+    <cache-ref namespace="org.memehazard.wheel.rbac.dao.RoleDAO"/>
+    
+    
+    <resultMap id="permission" type="org.memehazard.wheel.rbac.model.Permission">
+        <id property="id" column="perm_id" />
+        <result property="description" column="perm_description" />
+        <result property="name" column="perm_name" />
+    </resultMap>
+
+
+    <insert id="add" parameterType="org.memehazard.wheel.rbac.model.Permission">
+        <selectKey keyProperty="id" resultType="int" order="BEFORE">
+            select nextval('permission_perm_id_seq'::regclass)
+        </selectKey>
+        
+        INSERT INTO permission 
+            (perm_id, perm_description, perm_name)
+        VALUES 
+        (
+            #{id}, #{description}, #{name}
+        );
+    </insert>
+
+    
+    <insert id="assignToRole" parameterType="map">
+        INSERT INTO role_perm_link 
+            (role_perm_link_role_id, role_perm_link_perm_id)
+        VALUES
+            ( #{roleId}, #{permissionId} );
+    </insert>
+    
+    
+    <delete id="deassignFromRole" parameterType="map">
+        DELETE FROM role_perm_link 
+        WHERE role_perm_link_role_id = #{roleId} AND role_perm_link_perm_id = #{permissionId}
+    </delete>
+        
+    
+    <delete id="delete" parameterType="integer">
+        DELETE FROM permission WHERE perm_id = #{id}
+    </delete>
+    
+    
+    <select id="get" parameterType="integer" resultMap="permission">
+        SELECT
+            perm_id,
+            perm_description,
+            perm_name
+        FROM permission
+        WHERE perm_id = #{id}
+    </select>
+        
+        
+    <select id="getByName" parameterType="string" resultMap="permission">
+        SELECT
+            perm_id,
+            perm_description,
+            perm_name
+        FROM permission
+        WHERE perm_name = #{name}
+    </select>
+            
+    
+    <select id="listAll" resultMap="permission">
+        SELECT
+            perm_id,
+            perm_description,
+            perm_name
+        FROM permission
+        ORDER BY perm_name
+    </select>
+    
+    
+    <select id="listByRole" resultMap="permission">
+        SELECT
+            perm_id,
+            perm_description,
+            perm_name
+        FROM permission 
+        INNER JOIN role_perm_link ON role_perm_link_perm_id = perm_id
+        INNER JOIN role ON role_id = role_perm_link_role_id
+        WHERE role_id = #{roleId}
+        ORDER BY perm_name
+    </select>
+    
+    
+    <update id="update">
+        UPDATE permission SET
+            perm_description = #{description},
+            perm_name = #{name}
+        WHERE perm_id = #{id}
+    </update>
+</mapper>
+

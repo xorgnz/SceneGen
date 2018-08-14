@@ -1,0 +1,33 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.memehazard.wheel.asset.test.TestDAO_Asset">
+
+    <cache />
+    
+    <insert id="createTestData">
+        DELETE FROM scene;
+        DELETE FROm scene_fragment;
+        DELETE FROM asset_styletag;
+        DELETE FROM asset;
+        DELETE FROM asset_set;
+        
+        INSERT INTO asset_set (assetset_id, assetset_name, assetset_maintainer) VALUES (1, 'Asset Set 30', 'Maintainer');
+        INSERT INTO asset_set (assetset_id, assetset_name, assetset_maintainer) VALUES (2, 'Asset Set 21', 'Maintainer');
+        INSERT INTO asset_set (assetset_id, assetset_name, assetset_maintainer) VALUES (3, 'Asset Set 12', 'Maintainer');
+        INSERT INTO asset_set (assetset_id, assetset_name, assetset_maintainer) VALUES (4, 'Asset Set 03', 'Maintainer');
+        
+        INSERT INTO asset (asset_id, asset_name, asset_entity_id, asset_x3d_filename, asset_obj_filename, asset_centroid_x, asset_centroid_y, asset_centroid_z, asset_max_x, asset_max_y, asset_max_z, asset_min_x, asset_min_y, asset_min_z, asset_assetset_id) VALUES (1, 'Asset 50', '1000', 'file.x3d', 'file.obj', '0.01', '0.02', '0.03', '0.11', '0.12', '0.13', '0.21', '0.22', '0.23', 1);
+        INSERT INTO asset (asset_id, asset_name, asset_entity_id, asset_x3d_filename, asset_obj_filename, asset_centroid_x, asset_centroid_y, asset_centroid_z, asset_max_x, asset_max_y, asset_max_z, asset_min_x, asset_min_y, asset_min_z, asset_assetset_id) VALUES (2, 'Asset 41', '1001', 'file.x3d', 'file.obj', '0.01', '0.02', '0.03', '0.11', '0.12', '0.13', '0.21', '0.22', '0.23', 1);
+        INSERT INTO asset (asset_id, asset_name, asset_entity_id, asset_x3d_filename, asset_obj_filename, asset_centroid_x, asset_centroid_y, asset_centroid_z, asset_max_x, asset_max_y, asset_max_z, asset_min_x, asset_min_y, asset_min_z, asset_assetset_id) VALUES (3, 'Asset 32', '1002', 'file.x3d', 'file.obj', '0.01', '0.02', '0.03', '0.11', '0.12', '0.13', '0.21', '0.22', '0.23', 1);
+        INSERT INTO asset (asset_id, asset_name, asset_entity_id, asset_x3d_filename, asset_obj_filename, asset_centroid_x, asset_centroid_y, asset_centroid_z, asset_max_x, asset_max_y, asset_max_z, asset_min_x, asset_min_y, asset_min_z, asset_assetset_id) VALUES (4, 'Asset 23', '1003', 'file.x3d', 'file.obj', '0.01', '0.02', '0.03', '0.11', '0.12', '0.13', '0.21', '0.22', '0.23', 1);
+        INSERT INTO asset (asset_id, asset_name, asset_entity_id, asset_x3d_filename, asset_obj_filename, asset_centroid_x, asset_centroid_y, asset_centroid_z, asset_max_x, asset_max_y, asset_max_z, asset_min_x, asset_min_y, asset_min_z, asset_assetset_id) VALUES (5, 'Asset 14', '1004', 'file.x3d', 'file.obj', '0.01', '0.02', '0.03', '0.11', '0.12', '0.13', '0.21', '0.22', '0.23', 2);
+        INSERT INTO asset (asset_id, asset_name, asset_entity_id, asset_x3d_filename, asset_obj_filename, asset_centroid_x, asset_centroid_y, asset_centroid_z, asset_max_x, asset_max_y, asset_max_z, asset_min_x, asset_min_y, asset_min_z, asset_assetset_id) VALUES (6, 'Asset 05', '1005', 'file.x3d', 'file.obj', '0.01', '0.02', '0.03', '0.11', '0.12', '0.13', '0.21', '0.22', '0.23', 2);   
+        
+        INSERT INTO asset_styletag (astag_asset_id, astag_tag) VALUES (1, 'asset');
+        INSERT INTO asset_styletag (astag_asset_id, astag_tag) VALUES (1, 'style');
+        INSERT INTO asset_styletag (astag_asset_id, astag_tag) VALUES (1, 'tags');
+        INSERT INTO asset_styletag (astag_asset_id, astag_tag) VALUES (2, 'asset');
+    </insert>
+    
+</mapper>

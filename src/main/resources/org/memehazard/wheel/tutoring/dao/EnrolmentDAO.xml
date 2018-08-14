@@ -1,0 +1,119 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.memehazard.wheel.tutoring.dao.EnrolmentDAO">
+
+    <cache />
+
+
+    <resultMap id="enrolment" type="org.memehazard.wheel.tutoring.model.Enrolment">
+        <id property="curriculumId" column="itse_curriculum_id" />
+        <id property="student.id" column="itse_student_id" />
+        <result property="dirty" column="itse_dirty" />
+        <result property="eventCount" column="itsev_count" />
+        
+        <association property="student" javaType="org.memehazard.wheel.rbac.model.User">
+            <result property="id" column="user_id" />
+            <result property="email" column="user_email" />
+            <result property="firstName" column="user_firstname" />
+            <result property="lastName" column="user_lastname" />
+            <result property="password" column="user_password" />
+            <result property="username" column="user_username" />
+        </association>  
+    </resultMap>
+    
+
+    <update id="add" parameterType="org.memehazard.wheel.tutoring.model.Enrolment">
+        INSERT INTO its_enrolment 
+            (itse_curriculum_id, itse_student_id, itse_dirty) 
+        VALUES 
+            (#{curriculumId}, #{student.id}, #{dirty});
+    </update>
+    
+    
+    <delete id="delete" parameterType="list">
+        DELETE FROM its_enrolment 
+        WHERE itse_curriculum_id = #{curriculumId} AND itse_student_id = #{studentId} 
+    </delete>
+
+
+    <select id="isEnrolled" resultType="boolean">
+        SELECT
+            NOT count(itse_curriculum_id) = 0
+        FROM its_enrolment
+        WHERE itse_curriculum_id = #{curriculumId} AND itse_student_id = #{studentId} 
+    </select>
+    
+    
+    <select id="listByCurriculum" parameterType="long" resultMap="enrolment">
+        SELECT
+            itse_curriculum_id,
+            itse_student_id,
+            itse_dirty,
+            user_id,
+            user_email,
+            user_firstname,
+            user_lastname,
+            user_password,
+            user_username,
+            count(itsev_id) as itsev_count
+        FROM its_enrolment
+        INNER JOIN usr on user_id = itse_student_id
+        LEFT OUTER JOIN its_event ON its_event.itsev_curriculum_id = itse_curriculum_id AND itsev_student_id = itse_student_id
+        WHERE 
+            itse_curriculum_id = #{curriculumId}
+        GROUP BY             
+            itse_curriculum_id,
+            itse_student_id,
+            itse_dirty,
+            user_id,
+            user_email,
+            user_firstname,
+            user_lastname,
+            user_password,
+            user_username
+        ORDER BY user_lastname, user_firstname
+    </select>
+        
+    
+    <select id="listByStudent" parameterType="long" resultMap="enrolment">
+        SELECT
+            itse_curriculum_id,
+            itse_student_id,
+            itse_dirty,
+            user_id,
+            user_email,
+            user_firstname,
+            user_lastname,
+            user_password,
+            user_username,
+            count(itsev_id) as itsev_count
+        FROM its_enrolment
+        INNER JOIN usr on user_id = itse_student_id
+        LEFT OUTER JOIN its_event ON its_event.itsev_curriculum_id = itse_curriculum_id AND itsev_student_id = itse_student_id
+        WHERE 
+            itse_student_id = #{studentId}
+        GROUP BY             
+            itse_curriculum_id,
+            itse_student_id,
+            itse_dirty,
+            user_id,
+            user_email,
+            user_firstname,
+            user_lastname,
+            user_password,
+            user_username
+        ORDER BY user_lastname, user_firstname, itse_curriculum_id
+    </select>
+    
+    
+    <select id="listStudentIdsByCurriculum" resultType="long">
+        SELECT
+            itse_student_id
+        FROM its_enrolment
+        WHERE 
+            itse_curriculum_id = #{curriculumId}
+    </select>
+    
+</mapper>
+

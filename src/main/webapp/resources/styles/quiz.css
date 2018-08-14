@@ -1,0 +1,56 @@
+
+div#quiz_left_buttons_wrapper
+{
+    bottom: 0px;
+    position: absolute;
+}
+
+#quiz_panel_wrap
+{
+    width: 100%;
+    height: 0px;
+}
+#quiz_panel
+{
+    float: left;
+    margin: 20px 0px 0px 20px;
+    position: relative;
+    width: 400px;
+    z-index: 10;
+
+    background-color: rgba(200, 200, 200, 0.7);
+    padding: 8px;
+    border-radius:12px;
+    border: 4px solid #069;
+    font-family: Verdana, sans serif;
+}
+
+#quiz_panel button
+{
+    margin: 8px auto;
+    display: block;
+}
+
+#quiz_panel h3
+{
+    display: block;
+    color: #003366;
+    font-weight: bold;
+    margin: 4px 0px 6px 0px;
+}
+
+#quiz_panel p
+{
+    display: block;
+    margin: 0px;
+    font-size: 12px;
+}
+
+#quiz_panel p b
+{
+    font-weight: bold;
+}
+
+
+
+

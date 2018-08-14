@@ -1,0 +1,15 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.memehazard.wheel.query.test.TestDAO_Query">
+
+    <cache />
+        
+
+    <insert id="clear">
+        DELETE FROM query_cache_line;
+        DELETE FROM query_param;
+        DELETE FROM query;
+    </insert>    
+    
+</mapper>

@@ -1,0 +1,115 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.memehazard.wheel.activity.dao.ActivityInstanceDAO">
+
+    <cache />
+    <cache-ref namespace="org.memehazard.wheel.activity.dao.ActivityTemplateDAO"/>
+    <cache-ref namespace="org.memehazard.wheel.activity.dao.ExerciseDAO"/>
+    
+    <resultMap id="instance" type="org.memehazard.wheel.activity.model.ActivityInstance">
+        <id property="id" column="activityi_id" />
+        <result property="name" column="activityi_name" />
+        <result property="description" column="activityi_description" />
+        <result property="parameterValueString" column="activityi_param_str" />
+    </resultMap>
+    
+    <resultMap id="instanceWithTemplate" type="org.memehazard.wheel.activity.model.ActivityInstance">
+        <id property="id" column="activityi_id" />
+        <result property="name" column="activityi_name" />
+        <result property="description" column="activityi_description" />
+        <result property="parameterValueString" column="activityi_param_str" />
+        <association property="template" javaType="org.memehazard.wheel.activity.model.ActivityTemplate">
+            <result property="id" column="activityt_id" />
+            <result property="name" column="activityt_name" />
+            <result property="description" column="activityt_description" />
+            <result property="playUrl" column="activityt_url_play" />
+            <result property="factsUrl" column="activityt_url_facts" />
+            <collection property="parameters" ofType="org.memehazard.wheel.activity.model.Parameter">
+                <result property="label" column="activitytp_label" />
+                <result property="variable" column="activitytp_variable" />
+                <result property="type" column="activitytp_type" />
+            </collection>
+        </association>
+    </resultMap>
+        
+    <insert id="add" parameterType="org.memehazard.wheel.activity.model.ActivityInstance">
+        <selectKey keyProperty="id" resultType="int" order="BEFORE">
+            select nextval('activity_instance_activityi_id_seq'::regclass)
+        </selectKey>
+        
+        INSERT INTO activity_instance
+            (activityi_id, activityi_activityt_id, activityi_name, activityi_description, activityi_param_str)
+        VALUES 
+        (
+            #{id}, #{template.id}, #{name}, #{description}, #{parameterValueString}
+        );        
+    </insert>
+        
+    <delete id="delete" parameterType="integer">
+        DELETE FROM activity_instance WHERE activityi_id = #{id}
+    </delete>
+
+    <select id="get" parameterType="integer" resultMap="instanceWithTemplate">
+        SELECT
+            activityi_id,
+            activityi_name,
+            activityi_description,
+            activityi_param_str,
+            activityt_id,
+            activityt_name,
+            activityt_description,
+            activityt_url_play,
+            activityt_url_facts,
+            activitytp_label,
+            activitytp_variable,
+            activitytp_type
+        FROM activity_instance
+        LEFT OUTER JOIN activity_template ON activityi_activityt_id = activityt_id
+        LEFT OUTER JOIN activity_template_param ON activityt_id = activitytp_activityt_id
+        WHERE activityi_id = #{id}
+    </select>
+    
+    <select id="listAll" resultMap="instanceWithTemplate">
+        SELECT
+            activityi_id,
+            activityi_name,
+            activityi_description,
+            activityi_param_str,
+            activityt_id,
+            activityt_name,
+            activityt_description,
+            activityt_url_play,
+            activityt_url_facts
+        FROM activity_instance
+        INNER JOIN activity_template ON activityi_activityt_id = activityt_id
+        ORDER BY activityi_name ASC
+    </select>
+     
+    <select id="listByTemplate" parameterType="integer" resultMap="instanceWithTemplate">
+        SELECT
+            activityi_id,
+            activityi_name,
+            activityi_description,
+            activityi_param_str,
+            activityt_id,
+            activityt_name,
+            activityt_description,
+            activityt_url_play,
+            activityt_url_facts
+        FROM activity_instance
+        INNER JOIN activity_template ON activityi_activityt_id = activityt_id
+        WHERE activityi_activityt_id = #{templateId}
+        ORDER BY activityi_name ASC
+    </select>
+
+    <update id="update">
+        UPDATE activity_instance SET
+            activityi_activityt_id = #{template.id},
+            activityi_name = #{name},
+            activityi_description = #{description},
+            activityi_param_str = #{parameterValueString}
+        WHERE activityi_id = #{id}
+    </update>
+    
+</mapper>

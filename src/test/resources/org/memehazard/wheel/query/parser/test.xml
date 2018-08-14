@@ -1,0 +1,52 @@
+<rdf:RDF
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:fma="http://purl.org/sig/ont/fma/"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
+
+    <rdf:Description rdf:about="http://purl.org/sig/ont/fma/Tenth_thoracic_vertebra">
+        <fma:articulates_with rdf:resource="http://purl.org/sig/ont/fma/Right_tenth_rib"/>
+        <fma:articulates_with rdf:resource="http://purl.org/sig/ont/fma/Left_tenth_rib"/>
+        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Tenth thoracic vertebra</rdfs:label>
+        <fma:articulates_with rdf:resource="http://purl.org/sig/ont/fma/Ninth_thoracic_vertebra"/>
+        <fma:articulates_with rdf:resource="http://purl.org/sig/ont/fma/Eleventh_thoracic_vertebra"/>
+        <rdf:type rdf:resource="http://purl.org/sig/ont/fma/Thoracic_vertebra"/>
+        <fma:FMAID rdf:datatype="http://www.w3.org/2001/XMLSchema#string">10037</fma:FMAID>
+        <fma:data1>data1_1</fma:data1>
+        <fma:data2>data2_1</fma:data2>
+    </rdf:Description>
+    <rdf:Description rdf:about="http://purl.org/sig/ont/fma/Eleventh_thoracic_vertebra">
+        <fma:articulates_with rdf:resource="http://purl.org/sig/ont/fma/Tenth_thoracic_vertebra"/>
+        <fma:FMAID rdf:datatype="http://www.w3.org/2001/XMLSchema#string">10059</fma:FMAID>
+        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Eleventh thoracic vertebra</rdfs:label>
+        <fma:data1>data1_2</fma:data1>
+        <fma:data2>data2_2</fma:data2>
+    </rdf:Description>
+    <rdf:Description rdf:about="http://purl.org/sig/ont/fma/Thoracic_vertebra">
+        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Thoracic vertebra</rdfs:label>
+        <fma:FMAID rdf:datatype="http://www.w3.org/2001/XMLSchema#string">9139</fma:FMAID>
+        <fma:data1>data1_3</fma:data1>
+        <fma:data2>data2_3</fma:data2>
+    </rdf:Description>
+    <rdf:Description rdf:about="http://purl.org/sig/ont/fma/Right_tenth_rib">
+        <fma:articulates_with rdf:resource="http://purl.org/sig/ont/fma/Tenth_thoracic_vertebra"/>
+        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Right tenth rib</rdfs:label>
+        <fma:FMAID rdf:datatype="http://www.w3.org/2001/XMLSchema#string">8445</fma:FMAID>
+        <fma:data1>data1_4</fma:data1>
+        <fma:data2>data2_4</fma:data2>
+    </rdf:Description>
+    <rdf:Description rdf:about="http://purl.org/sig/ont/fma/Ninth_thoracic_vertebra">
+        <fma:articulates_with rdf:resource="http://purl.org/sig/ont/fma/Tenth_thoracic_vertebra"/>
+        <fma:FMAID rdf:datatype="http://www.w3.org/2001/XMLSchema#string">10014</fma:FMAID>
+        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Ninth thoracic vertebra</rdfs:label>
+        <fma:data1>data1_0</fma:data1>
+        <fma:data2>data2_0</fma:data2>
+    </rdf:Description>
+    <rdf:Description rdf:about="http://purl.org/sig/ont/fma/Left_tenth_rib">
+        <fma:articulates_with rdf:resource="http://purl.org/sig/ont/fma/Tenth_thoracic_vertebra"/>
+        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Left tenth rib</rdfs:label>
+        <fma:FMAID rdf:datatype="http://www.w3.org/2001/XMLSchema#string">8472</fma:FMAID>
+        <fma:data1>data1_5</fma:data1>
+        <fma:data2>data2_5</fma:data2>
+    </rdf:Description>
+</rdf:RDF>

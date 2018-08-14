@@ -1,0 +1,121 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.memehazard.wheel.activity.dao.ActivityTemplateDAO">
+
+    <cache />
+    <cache-ref namespace="org.memehazard.wheel.activity.dao.ActivityInstanceDAO"/>
+    <cache-ref namespace="org.memehazard.wheel.activity.dao.ExerciseDAO"/>
+    
+    <resultMap id="templateWithParameters" type="org.memehazard.wheel.activity.model.ActivityTemplate">
+        <id property="id" column="activityt_id" />
+        <result property="name" column="activityt_name" />
+        <result property="description" column="activityt_description" />
+        <result property="playUrl" column="activityt_url_play" />
+        <result property="factsUrl" column="activityt_url_facts" />
+        <collection property="parameters" ofType="org.memehazard.wheel.activity.model.Parameter">
+            <result property="label" column="activitytp_label" />
+            <result property="variable" column="activitytp_variable" />
+            <result property="type" column="activitytp_type" />
+        </collection>
+    </resultMap>
+
+
+    <resultMap id="template" type="org.memehazard.wheel.activity.model.ActivityTemplate">
+        <id property="id" column="activityt_id" />
+        <result property="name" column="activityt_name" />
+        <result property="description" column="activityt_description" />
+        <result property="playUrl" column="activityt_url_play" />
+        <result property="factsUrl" column="activityt_url_facts" />
+    </resultMap>
+
+
+    <insert id="add" parameterType="org.memehazard.wheel.activity.model.ActivityTemplate">
+        <selectKey keyProperty="id" resultType="int" order="BEFORE">
+            select nextval('activity_template_activityt_id_seq'::regclass)
+        </selectKey>
+
+        INSERT INTO activity_template
+            (activityt_id, activityt_name, activityt_description, activityt_url_play, activityt_url_facts)
+        VALUES 
+        (
+            #{id}, #{name}, #{description}, #{playUrl}, #{factsUrl}
+        );
+    </insert>
+    
+            
+    <insert id="addParameters">
+        INSERT INTO activity_template_param 
+            (activitytp_label, activitytp_variable, activitytp_type, activitytp_activityt_id)
+        VALUES 
+            <foreach collection="parameters" item="element" index="index" open="(" separator="),("  close=")">
+                #{element.label}, #{element.variable}, #{element.type}, #{id}
+            </foreach>
+    </insert>
+    
+    
+    <delete id="delete" parameterType="integer">
+        DELETE FROM activity_template WHERE activityt_id = #{id}
+    </delete>
+    
+    
+    <delete id="deleteParameters" parameterType="integer">
+        DELETE FROM activity_template_param WHERE activitytp_activityt_id = #{id}; 
+    </delete>
+    
+    
+    <select id="get" parameterType="integer" resultMap="templateWithParameters">
+        SELECT
+            activityt_id,
+            activityt_name,
+            activityt_description,
+            activityt_url_facts,
+            activityt_url_play,
+            activitytp_label,
+            activitytp_variable,
+            activitytp_type
+        FROM activity_template
+        LEFT OUTER JOIN activity_template_param ON activityt_id = activitytp_activityt_id
+        WHERE activityt_id = #{id}
+        ORDER BY activitytp_variable
+    </select>
+        
+    
+    <select id="listAll" resultMap="templateWithParameters">
+        SELECT
+            activityt_id,
+            activityt_name,
+            activityt_description,
+            activityt_url_facts,
+            activityt_url_play,
+            activitytp_label,
+            activitytp_variable,
+            activitytp_type
+        FROM activity_template
+        LEFT OUTER JOIN activity_template_param ON activityt_id = activitytp_activityt_id
+        ORDER BY activityt_name, activitytp_variable
+    </select>
+    
+    
+    <update id="update">
+        UPDATE activity_template SET
+            activityt_name = #{name},
+            activityt_description = #{description},
+            activityt_url_facts = #{factsUrl},
+            activityt_url_play = #{playUrl}
+        WHERE activityt_id = #{id}
+    </update>
+    
+    
+    <update id="updateParameters" parameterType="org.memehazard.wheel.activity.model.ActivityTemplate">
+        DELETE FROM activity_template_param WHERE activitytp_activityt_id = #{id}; 
+        
+        INSERT INTO activity_template_param
+            (activitytp_label, activitytp_variable, activitytp_activityt_id, activitytp_type)
+        VALUES 
+            <foreach collection="parameters" item="element" index="index" open="(" separator="),("  close=")">
+                #{element.label}, #{element.variable}, #{id}, #{element.type}
+            </foreach>    
+    </update>    
+    
+</mapper>

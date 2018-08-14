@@ -1,0 +1,113 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.memehazard.wheel.style.dao.StyleDAO">
+
+    <cache />
+    <cache-ref namespace="org.memehazard.wheel.style.dao.StylesheetDAO" />
+
+    <resultMap id="style" type="org.memehazard.wheel.style.model.Style">
+        <id property="id" column="style_id" />
+        <result property="alpha" column="style_alpha" />
+        <result property="ambient" column="style_ambient" />
+        <result property="diffuse" column="style_diffuse" />
+        <result property="emissive" column="style_emissive" />
+        <result property="priority" column="style_priority" />
+        <result property="shininess" column="style_shininess" />
+        <result property="specular" column="style_specular" />
+        <result property="tag" column="style_tag" />
+        <association property="stylesheet" javaType="org.memehazard.wheel.style.model.Stylesheet">
+            <result property="id" column="ssheet_id"/>
+            <result property="name" column="ssheet_name"/>
+        </association>
+    </resultMap>
+    
+    
+    <insert id="add" parameterType="org.memehazard.wheel.style.model.Style">
+        <selectKey keyProperty="id" resultType="int" order="BEFORE">
+            select nextval('style_style_id_seq'::regclass)
+        </selectKey>
+        
+        INSERT INTO style 
+            (style_id, style_alpha, style_ambient, style_diffuse, style_emissive, style_priority, style_shininess, style_specular, style_tag, style_ssheet_id)
+        VALUES 
+        (
+            #{id}, #{alpha}, #{ambient}, #{diffuse}, #{emissive}, #{priority}, #{shininess}, #{specular}, #{tag}, #{stylesheet.id}
+        );
+    </insert>
+            
+    
+    <delete id="delete" parameterType="integer">
+        DELETE FROM style WHERE style_id = #{id}
+    </delete>
+    
+    
+    <select id="get" parameterType="integer" resultMap="style">
+        SELECT
+            style_id,
+            style_alpha,
+            style_ambient,
+            style_diffuse,
+            style_emissive,
+            style_priority,
+            style_shininess,
+            style_specular,
+            style_tag,
+            ssheet_id,
+            ssheet_name
+        FROM style
+        LEFT OUTER JOIN stylesheet on style.style_ssheet_id = ssheet_id
+        WHERE style_id = #{id}
+    </select>
+        
+        
+    <select id="listAll" parameterType="string" resultMap="style">
+        SELECT
+            style_id,
+            style_alpha,
+            style_ambient,
+            style_diffuse,
+            style_emissive,
+            style_priority,
+            style_shininess,
+            style_specular,
+            style_tag,
+            style_ssheet_id as ssheet_id
+        FROM style
+        ORDER BY style_priority ASC
+    </select>
+    
+    
+    <select id="listByStylesheet" parameterType="string" resultMap="style">
+        SELECT
+            style_id,
+            style_alpha,
+            style_ambient,
+            style_diffuse,
+            style_emissive,
+            style_priority,
+            style_shininess,
+            style_specular,
+            style_tag,
+            style_ssheet_id as ssheet_id
+        FROM style
+        WHERE style_ssheet_id = #{id}
+        ORDER BY style_priority ASC
+    </select>    
+    
+    
+    <update id="update">
+        UPDATE style SET
+            style_alpha      = #{alpha},
+            style_ambient    = #{ambient},
+            style_diffuse    = #{diffuse},
+            style_emissive   = #{emissive},
+            style_priority   = #{priority},
+            style_shininess  = #{shininess},
+            style_specular   = #{specular},
+            style_tag        = #{tag},
+            style_ssheet_id  = #{stylesheet.id}
+        WHERE style_id = #{id}
+    </update>
+</mapper>
+

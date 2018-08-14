@@ -1,0 +1,72 @@
+h2.curriculum {
+    background-color: lightgray;
+    padding: 6px;
+    margin: 8px 0px 4px 0px
+}
+
+div.curriculumInfo {
+    padding: 0px 6px
+}
+
+div.curriculumInfo div.links {
+    font-size: 14px;
+}
+
+h3.students {
+    margin: 4px 0px 2px 0px;
+}
+
+table.students {
+    margin-left: 8px;
+    border-spacing: 0px;
+    margin-bottom: 16px;
+    font-size: 14px;
+}
+
+table.students td {
+    padding: 2px;
+    text-align: left;
+    vertical-align: top;
+    border-top: 0px;
+}
+
+table.students tr:nth-child(odd) {
+    background-color: #eee;
+}
+
+table.students tr:nth-child(even) {
+    background-color: #ccc;
+}
+
+table.students td.name {
+    width: 200px;   
+}
+
+table.students td.name div {
+    margin-top: 2px;   
+}
+
+table.students td.rating div {
+    padding: 3px 6px;
+    font-size: 12px;
+}
+
+table.students td.rating div.achievement_low {
+    background-color: red;
+    color: white;
+}
+
+table.students td.rating div.achievement_medium {
+    background-color: darkgoldenrod;
+    color: white;    
+}
+
+table.students td.rating div.achievement_high {
+    background-color: green;
+    color: white;
+}
+
+table.students td.commands div {
+    margin-left: 20px;
+    margin-top: 2px;   
+}

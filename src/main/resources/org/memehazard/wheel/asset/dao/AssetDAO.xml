@@ -1,0 +1,230 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.memehazard.wheel.asset.dao.AssetDAO">
+
+    <cache />
+    <cache-ref namespace="org.memehazard.wheel.asset.dao.AssetSetDAO" />
+  
+    <resultMap id="asset" type="org.memehazard.wheel.asset.model.Asset">
+        <id property="id" column="asset_id" />
+        <result property="entityId" column="asset_entity_id"/>
+        <result property="name" column="asset_name"/>
+        <result property="objFilename" column="asset_obj_filename" />
+        <result property="x3dFilename" column="asset_x3d_filename" />
+        
+        <association property="stats" javaType="org.memehazard.wheel.asset.model.Asset3DStatistics">
+            <result property="max_x" column="asset_max_x"/>
+            <result property="max_y" column="asset_max_y"/>
+            <result property="max_z" column="asset_max_z"/>
+            <result property="min_x" column="asset_min_x"/>
+            <result property="min_y" column="asset_min_y"/>
+            <result property="min_z" column="asset_min_z"/>
+            <result property="centroid_x" column="asset_centroid_x"/>
+            <result property="centroid_y" column="asset_centroid_y"/>
+            <result property="centroid_z" column="asset_centroid_z"/>
+        </association>
+        
+        <association property="assetSet" javaType="org.memehazard.wheel.asset.model.AssetSet">
+            <result property="id" column="assetset_id" />
+            <result property="maintainer" column="assetset_maintainer"/>
+            <result property="name" column="assetset_name"/>
+        </association>        
+        
+        <collection property="styleTags" ofType="string" >
+            <result column="astag_tag"/>
+        </collection>
+    </resultMap>
+    
+    <resultMap id="assetWithoutSet" type="org.memehazard.wheel.asset.model.Asset">
+        <id property="id" column="asset_id" />
+        <result property="entityId" column="asset_entity_id"/>
+        <result property="name" column="asset_name"/>
+        <result property="objFilename" column="asset_obj_filename" />
+        <result property="x3dFilename" column="asset_x3d_filename" />
+        
+        <association property="stats" javaType="org.memehazard.wheel.asset.model.Asset3DStatistics">
+            <result property="max_x" column="asset_max_x"/>
+            <result property="max_y" column="asset_max_y"/>
+            <result property="max_z" column="asset_max_z"/>
+            <result property="min_x" column="asset_min_x"/>
+            <result property="min_y" column="asset_min_y"/>
+            <result property="min_z" column="asset_min_z"/>
+            <result property="centroid_x" column="asset_centroid_x"/>
+            <result property="centroid_y" column="asset_centroid_y"/>
+            <result property="centroid_z" column="asset_centroid_z"/>
+        </association>
+        
+        <collection property="styleTags" ofType="string" >
+            <result column="astag_tag"/>
+        </collection>
+    </resultMap>
+    
+    <insert id="add" parameterType="org.memehazard.wheel.asset.model.Asset">
+        <selectKey keyProperty="id" resultType="int" order="BEFORE">
+            select nextval('asset_asset_id_seq'::regclass)
+        </selectKey>
+        
+        INSERT INTO asset 
+        (
+            asset_id, 
+            asset_entity_id, 
+            asset_name, 
+            asset_obj_filename, 
+            asset_x3d_filename, 
+            asset_max_x, 
+            asset_max_y, 
+            asset_max_z, 
+            asset_min_x, 
+            asset_min_y, 
+            asset_min_z, 
+            asset_centroid_x, 
+            asset_centroid_y, 
+            asset_centroid_z, 
+            asset_assetset_id
+        )
+        VALUES 
+        (
+            #{id}, 
+            #{entityId}, 
+            #{name}, 
+            #{objFilename}, 
+            #{x3dFilename},
+            #{stats.max_x}, 
+            #{stats.max_y}, 
+            #{stats.max_z},
+            #{stats.min_x}, 
+            #{stats.min_y}, 
+            #{stats.min_z},
+            #{stats.centroid_x}, 
+            #{stats.centroid_y}, 
+            #{stats.centroid_z},
+            #{assetSet.id}
+        );
+    </insert>
+
+    
+    <delete id="delete" parameterType="integer">
+        DELETE FROM asset WHERE asset_id = #{id}
+    </delete>
+    
+    
+    <delete id="deleteStyleTags" parameterType="integer">
+        DELETE FROM asset_styletag WHERE astag_asset_id = #{id};
+    </delete>
+    
+    
+    <select id="get" parameterType="integer" resultMap="asset">
+        SELECT
+            asset_id,
+            asset_entity_id,
+            asset_name,
+            asset_obj_filename,
+            asset_x3d_filename,
+            asset_max_x, 
+            asset_max_y, 
+            asset_max_z,
+            asset_min_x, 
+            asset_min_y, 
+            asset_min_z,
+            asset_centroid_x, 
+            asset_centroid_y, 
+            asset_centroid_z,
+            astag_tag,
+            assetset_id,
+            assetset_name,
+            assetset_maintainer
+        FROM asset
+        LEFT OUTER JOIN asset_styletag ON astag_asset_id = asset_id 
+        INNER JOIN asset_set ON assetset_id = asset_assetset_id
+        WHERE asset_id = #{id}
+        ORDER BY astag_tag
+    </select>
+    
+        
+    <select id="listAll" resultMap="asset">
+        SELECT
+            asset_id,
+            asset_entity_id,
+            asset_name,
+            asset_obj_filename,
+            asset_x3d_filename,
+            asset_max_x, 
+            asset_max_y, 
+            asset_max_z,
+            asset_min_x, 
+            asset_min_y, 
+            asset_min_z,
+            asset_centroid_x, 
+            asset_centroid_y, 
+            asset_centroid_z,
+            astag_tag,
+            asset_assetset_id as assetset_id
+        FROM asset
+        LEFT OUTER JOIN asset_styletag ON asset_id = astag_asset_id
+        ORDER BY asset_name, astag_tag
+    </select>
+
+    
+    <select id="listByAssetSet" parameterType="integer" resultMap="assetWithoutSet">
+        SELECT
+            asset_id,
+            asset_entity_id,
+            asset_name,
+            asset_obj_filename,
+            asset_x3d_filename,
+            asset_max_x, 
+            asset_max_y, 
+            asset_max_z,
+            asset_min_x, 
+            asset_min_y, 
+            asset_min_z,
+            asset_centroid_x, 
+            asset_centroid_y, 
+            asset_centroid_z,
+            astag_tag,
+            asset_assetset_id as assetset_id
+        FROM asset
+        LEFT OUTER JOIN asset_styletag ON asset_id = astag_asset_id
+        WHERE asset_assetset_id = #{id}
+        ORDER BY asset_name, astag_tag
+    </select>    
+
+    
+    <select id="listIdsByAssetSet" parameterType="integer" resultType="integer">
+        SELECT
+            asset_entity_id
+        FROM asset
+        WHERE asset_assetset_id = #{id}
+    </select>
+
+
+    <update id="update" parameterType="org.memehazard.wheel.asset.model.Asset">
+        UPDATE asset SET
+            asset_entity_id = #{entityId},
+            asset_name = #{name},
+            asset_obj_filename = #{objFilename},
+            asset_x3d_filename = #{x3dFilename},
+            asset_max_x = #{stats.max_x},
+            asset_max_y = #{stats.max_y},
+            asset_max_z = #{stats.max_z},
+            asset_min_x = #{stats.min_x},
+            asset_min_y = #{stats.min_y},
+            asset_min_z = #{stats.min_z},
+            asset_centroid_x = #{stats.centroid_x},
+            asset_centroid_y = #{stats.centroid_y},
+            asset_centroid_z = #{stats.centroid_z},
+            asset_assetset_id = #{assetSet.id}
+        WHERE asset_id = #{id}
+    </update>
+
+    <update id="updateStyleTags" parameterType="org.memehazard.wheel.asset.model.Asset">
+        DELETE FROM asset_styletag WHERE astag_asset_id = #{id};
+        
+        INSERT INTO asset_styletag 
+            (astag_asset_id, astag_tag)
+        VALUES 
+            <foreach collection="styleTags" item="tag" open="(" separator="),(" close=")">#{id}, #{tag}</foreach>
+    </update>
+
+</mapper>

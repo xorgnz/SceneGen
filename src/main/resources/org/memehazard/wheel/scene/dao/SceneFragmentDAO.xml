@@ -1,0 +1,192 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.memehazard.wheel.scene.dao.SceneFragmentDAO">
+    <cache />
+
+
+    <resultMap id="sceneFragment" type="org.memehazard.wheel.scene.model.SceneFragment">
+        <id property="id" column="scenef_id" />
+        <result property="name" column="scenef_name" />
+        <result property="queryParamString" column="scenef_query_param_str" />
+        <result property="type" column="scenef_type" />
+        <result property="sceneId" column="scenef_scene_id" />
+        <result property="stylesheetId" column="scenef_ssheet_id" />
+        <result property="assetSetId" column="scenef_assetset_id" />
+        <result property="queryId" column="scenef_query_id" />        
+    </resultMap>
+
+    <resultMap id="sceneFragmentWithAssociations" type="org.memehazard.wheel.scene.model.SceneFragment">
+        <id property="id" column="scenef_id" />
+        <result property="name" column="scenef_name" />
+        <result property="queryParamString" column="scenef_query_param_str" />
+        <result property="type" column="scenef_type" />
+                        
+        <association property="scene" javaType="org.memehazard.wheel.scene.model.Scene">
+            <result property="id" column="scene_id" />
+            <result property="name" column="scene_name" />
+        </association>
+                
+        <association property="stylesheet" javaType="org.memehazard.wheel.style.model.Stylesheet">
+            <result property="id" column="ssheet_id"/>
+            <result property="name" column="ssheet_name"/>
+        </association>
+        
+        <association property="assetSet" javaType="org.memehazard.wheel.asset.model.AssetSet">
+            <result property="id" column="assetset_id" />
+            <result property="maintainer" column="assetset_maintainer"/>
+            <result property="name" column="assetset_name"/>
+        </association>
+        
+        <association property="query" javaType="org.memehazard.wheel.query.model.Query">
+            <result property="id" column="query_id" />
+            <result property="name" column="query_name" />
+            <result property="queryId" column="query_qid" />
+            <collection property="parameters" ofType="org.memehazard.wheel.query.model.QueryParameter">
+                <result property="label" column="queryp_label" />
+                <result property="variable" column="queryp_variable" />
+            </collection>
+        </association>
+    </resultMap>
+
+        
+    <insert id="addListType" parameterType="org.memehazard.wheel.scene.model.SceneFragment">
+        <selectKey keyProperty="id" resultType="int" order="BEFORE">
+            select nextval('scene_fragment_scenef_id_seq'::regclass)
+        </selectKey>
+        
+        INSERT INTO scene_fragment 
+            (scenef_id, scenef_name, scenef_query_param_str, scenef_type, scenef_scene_id, scenef_ssheet_id, scenef_assetset_id, scenef_query_id)
+        VALUES 
+        (
+            #{id}, #{name}, '', 1, #{scene.id}, #{stylesheet.id}, #{assetSet.id}, NULL
+        );
+    </insert>
+
+        
+    <insert id="addMixedListType" parameterType="org.memehazard.wheel.scene.model.SceneFragment">
+        <selectKey keyProperty="id" resultType="int" order="BEFORE">
+            select nextval('scene_fragment_scenef_id_seq'::regclass)
+        </selectKey>
+        
+        INSERT INTO scene_fragment 
+            (scenef_id, scenef_name, scenef_query_param_str, scenef_type, scenef_scene_id, scenef_ssheet_id, scenef_assetset_id, scenef_query_id)
+        VALUES 
+        (
+            #{id}, #{name}, '', 2, #{scene.id}, NULL, NULL, NULL
+        );
+    </insert>
+
+        
+    <insert id="addQueryType" parameterType="org.memehazard.wheel.scene.model.SceneFragment">
+        <selectKey keyProperty="id" resultType="int" order="BEFORE">
+            select nextval('scene_fragment_scenef_id_seq'::regclass)
+        </selectKey>
+        
+        INSERT INTO scene_fragment 
+            (scenef_id, scenef_name, scenef_query_param_str, scenef_type, scenef_scene_id, scenef_ssheet_id, scenef_assetset_id, scenef_query_id)
+        VALUES 
+        (
+            #{id}, #{name}, #{queryParamString}, 0, #{scene.id}, #{stylesheet.id}, #{assetSet.id}, #{query.id}
+        );
+    </insert>
+            
+    
+    <delete id="delete" parameterType="integer">
+        DELETE FROM scene_fragment WHERE scenef_id = #{id}
+    </delete>
+            
+    
+    <delete id="deleteByScene" parameterType="integer">
+        DELETE FROM scene_fragment WHERE scenef_scene_id = #{id}
+    </delete>
+    
+
+    <select id="get" parameterType="integer" resultMap="sceneFragment">
+        SELECT
+            scenef_id,
+            scenef_name,
+            scenef_query_param_str,
+            scenef_type,
+            scenef_assetset_id,
+            scenef_query_id,
+            scenef_scene_id,
+            scenef_ssheet_id
+        FROM scene_fragment
+        WHERE scenef_id = #{id}
+    </select>    
+        
+        
+    <select id="listAll" resultMap="sceneFragment">
+        SELECT
+            scenef_id,
+            scenef_name,
+            scenef_query_param_str,
+            scenef_type,
+            scenef_assetset_id,
+            scenef_query_id,
+            scenef_scene_id,
+            scenef_ssheet_id
+        FROM scene_fragment
+        ORDER BY scenef_name
+    </select>
+        
+        
+    <select id="listBySceneWithAssociations" resultMap="sceneFragmentWithAssociations">
+        SELECT
+            scenef_id,
+            scenef_name,
+            scenef_query_param_str,
+            scenef_type,
+            scenef_assetset_id,
+            scenef_query_id,
+            scenef_scene_id,
+            scenef_ssheet_id,
+            scene_id,
+            scene_name,
+            ssheet_id,
+            ssheet_name,
+            assetset_id,
+            assetset_name,
+            assetset_maintainer,
+            query_id,
+            query_name,
+            query_qid,
+            queryp_label,
+            queryp_variable
+        FROM scene_fragment
+        LEFT OUTER JOIN scene on scenef_scene_id = scene_id
+        LEFT OUTER JOIN stylesheet on scenef_ssheet_id = ssheet_id
+        LEFT OUTER JOIN asset_set on scenef_assetset_id = assetset_id
+        LEFT OUTER JOIN query on scenef_query_id = query_id
+        LEFT OUTER JOIN query_param ON query_id = queryp_query_id
+        WHERE scene_id = #{sceneId}
+        ORDER BY scenef_name
+    </select>
+
+    
+    <update id="updateListType">
+        UPDATE scene_fragment SET
+            scenef_name = #{name},
+            scenef_query_param_str = '',
+            scenef_type = 1,
+            scenef_scene_id = #{scene.id},
+            scenef_ssheet_id = #{stylesheet.id}, 
+            scenef_assetset_id = #{assetSet.id}, 
+            scenef_query_id = NULL
+        WHERE scenef_id = #{id}
+    </update>
+
+
+    <update id="updateQueryType">
+        UPDATE scene_fragment SET
+            scenef_name = #{name},
+            scenef_query_param_str = #{queryParamString},
+            scenef_type = 0,
+            scenef_scene_id = #{scene.id},
+            scenef_ssheet_id = #{stylesheet.id}, 
+            scenef_assetset_id = #{assetSet.id}, 
+            scenef_query_id = #{query.id}
+        WHERE scenef_id = #{id}
+    </update>
+</mapper>

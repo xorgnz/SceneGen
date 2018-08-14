@@ -1,0 +1,33 @@
+
+
+Query 408
+
+Retrieve list of relationships of given type that are rooted at entity with given FMAID
+
+----------
+
+PREFIX fma:<http://purl.org/sig/ont/fma/>
+PREFIX xsd:<http://www.w3.org/2001/XMLSchema#>
+PREFIX rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+CONSTRUCT
+{
+    ?chain_entity rdfs:label ?chain_pname_val .
+    ?chain_entity fma:FMAID ?chain_entity_fmaid .
+    ?chain_entity relation ?entity .
+    ?entity rdfs:label ?pname_val .
+    ?entity fma:FMAID ?fmaid .
+}
+FROM <http://purl.org/sig/ont/fma.owl>
+WHERE
+{
+    ?origin fma:FMAID "target"^^xsd:string .
+    ?origin relation* ?chain_entity .
+    
+    ?chain_entity relation ?entity.
+    
+    ?entity fma:FMAID ?fmaid .
+    ?entity fma:preferred_name ?pname_val .
+    
+    ?chain_entity fma:FMAID ?chain_entity_fmaid .
+    ?chain_entity fma:preferred_name ?chain_pname_val .
+}

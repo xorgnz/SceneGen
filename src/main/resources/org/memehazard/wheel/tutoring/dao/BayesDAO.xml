@@ -1,0 +1,134 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.memehazard.wheel.tutoring.dao.BayesDAO">
+
+    <cache />
+
+
+    <delete id="delete">
+        DELETE FROM its_student_model 
+        WHERE itss_domain_id = #{domainId} AND itss_student_id = #{studentId} 
+    </delete>
+
+
+    <delete id="deleteAllByDomainId">
+        DELETE FROM its_student_model 
+        WHERE itss_domain_id = #{domainId} 
+    </delete>
+
+
+    <delete id="deleteAllByMultipleDomainIds">
+        DELETE FROM its_student_model 
+        WHERE 
+            itss_domain_id IN <foreach collection="domainIds" item="id" open="(-1," separator=","  close=")">#{id}</foreach> 
+    </delete>
+    
+
+    <delete id="deleteAllByMultipleDomainModelNodes" parameterType="list">
+        DELETE FROM its_student_model 
+        WHERE 
+            itss_domain_id IN <foreach collection="nodes" item="node" open="(-1," separator=","  close=")">#{node.nodeId}</foreach> 
+    </delete>    
+    
+
+    <delete id="deleteByMultipleDomainModelNodes">
+        DELETE FROM its_student_model 
+        WHERE 
+            itss_domain_id IN <foreach collection="nodes" item="node" open="(-1," separator=","  close=")">#{node.nodeId}</foreach>
+        AND
+            itss_student_id = #{studentId}
+    </delete>  
+
+
+    <select id="get" resultType="org.memehazard.wheel.tutoring.model.BayesValue">
+        SELECT
+            itss_domain_id AS domainId,
+            itss_student_id AS studentId,
+            itss_p AS p,
+            itss_timestamp AS timestamp
+        FROM its_student_model
+        WHERE itss_domain_id = #{domainId} AND itss_student_id = #{studentId} 
+    </select>
+    
+    
+    <select id="list" resultType="org.memehazard.wheel.tutoring.model.BayesValue">
+        SELECT
+            itss_domain_id AS domainId,
+            itss_student_id AS studentId,
+            itss_p AS p,
+            itss_timestamp AS timestamp
+        FROM its_student_model
+        WHERE 
+            itss_domain_id IN <foreach collection="domainIds" item="id" open="(" separator=","  close=")">#{id}</foreach>
+        AND
+            itss_student_id = #{studentId}
+    </select>
+    
+        
+    <select id="listForAllStudents" resultType="org.memehazard.wheel.tutoring.model.BayesValue">
+        SELECT
+            itss_domain_id AS domainId,
+            itss_student_id AS studentId,
+            itss_p AS p,
+            itss_timestamp AS timestamp
+        FROM its_student_model
+        WHERE 
+            itss_domain_id = #{domainId}
+    </select>
+    
+    
+    <select id="listByMultipleDomainModelNodes" resultType="org.memehazard.wheel.tutoring.model.BayesValue">
+        SELECT
+            itss_domain_id AS domainId,
+            itss_student_id AS studentId,
+            itss_p AS p,
+            itss_timestamp AS timestamp
+        FROM its_student_model        
+        WHERE 
+            itss_domain_id IN <foreach collection="nodes" item="node" open="(" separator=","  close=")">#{node.nodeId}</foreach>
+        AND
+            itss_student_id = #{studentId}
+    </select>
+    
+
+    <update id="set">
+        DELETE FROM its_student_model
+        WHERE itss_domain_id = #{domainId} AND itss_student_id = #{studentId};
+        
+        INSERT INTO its_student_model 
+            (itss_domain_id, itss_student_id, itss_p, itss_timestamp) 
+        VALUES 
+            (#{domainId}, #{studentId}, #{p}, #{timestamp});
+    </update>
+    
+    
+    <update id="setMultiple">
+        DELETE FROM its_student_model
+        WHERE 
+        <foreach collection="bvals" item="bv" open="" separator=" OR " close="">
+            itss_domain_id = #{bv.domainId} AND itss_student_id = #{bv.studentId} 
+        </foreach>;
+        
+        INSERT INTO its_student_model 
+            (itss_domain_id, itss_student_id, itss_p, itss_timestamp) 
+        VALUES 
+            <foreach collection="bvals" item="bv" open="(" separator="),(" close=")">#{bv.domainId}, #{bv.studentId}, #{bv.p}, #{bv.timestamp}</foreach>
+    </update>
+    
+    
+    <update id="setForMultipleStudents">
+        DELETE FROM its_student_model
+        WHERE 
+            itss_domain_id = #{domainId}
+        AND 
+            itss_student_id IN <foreach collection="studentIds" item="id" open="(-1," separator=","  close=")">#{id}</foreach>;
+        
+        INSERT INTO its_student_model 
+            (itss_domain_id, itss_student_id, itss_p, itss_timestamp) 
+        VALUES 
+            <foreach collection="studentIds" item="studentId" open="(" separator="),(" close=")">#{domainId}, #{studentId}, #{p}, #{timestamp}</foreach>
+    </update>
+        
+</mapper>
+

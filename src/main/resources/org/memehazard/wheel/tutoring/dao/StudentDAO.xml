@@ -1,0 +1,41 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.memehazard.wheel.tutoring.dao.StudentDAO">
+
+    <cache />
+    <resultMap id="student" type="org.memehazard.wheel.tutoring.model.Student">
+        <id property="user.id" column="user_id" />
+        
+        <association property="user" javaType="org.memehazard.wheel.rbac.model.User">
+            <id property="id" column="user_id" />
+            <result property="email" column="user_email" />
+            <result property="firstName" column="user_firstname" />
+            <result property="lastName" column="user_lastname" />
+            <result property="password" column="user_password" />
+            <result property="username" column="user_username" />
+        </association>  
+        
+        <collection property="enrolments" javaType="org.memehazard.wheel.tutoring.model.Enrolment">
+            <result property="curriculumId" column="itse_curriculum_id" />
+            <result property="dirty" column="itse_dirty" />
+        </collection>
+    </resultMap>
+    
+    <select id="listAll" resultMap="student">
+        SELECT
+            itse_curriculum_id,
+            itse_student_id,
+            itse_dirty,
+            user_id,
+            user_email,
+            user_firstname,
+            user_lastname,
+            user_password,
+            user_username
+        FROM its_enrolment
+        INNER JOIN usr on user_id = itse_student_id
+        ORDER BY user_lastname, user_firstname, itse_curriculum_id
+    </select>
+</mapper>
+

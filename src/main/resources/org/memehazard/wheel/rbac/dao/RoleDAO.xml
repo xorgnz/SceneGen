@@ -1,0 +1,113 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.memehazard.wheel.rbac.dao.RoleDAO">
+
+    <cache />
+    <cache-ref namespace="org.memehazard.wheel.rbac.dao.UserDAO"/>
+    <cache-ref namespace="org.memehazard.wheel.rbac.dao.PermissionDAO"/>
+
+
+    <resultMap id="role" type="org.memehazard.wheel.rbac.model.Role">
+        <id property="id" column="role_id" />
+        <result property="description" column="role_description" />
+        <result property="name" column="role_name" />
+    </resultMap>
+
+
+    <insert id="add" parameterType="org.memehazard.wheel.rbac.model.Role">
+        <selectKey keyProperty="id" resultType="int" order="BEFORE">
+            select nextval('role_role_id_seq'::regclass)
+        </selectKey>
+        
+        INSERT INTO role 
+            (role_id, role_description, role_name)
+        VALUES 
+        (
+            #{id}, #{description}, #{name}
+        );
+    </insert>
+
+    
+    <insert id="assignToUser" parameterType="map">
+        INSERT INTO user_role_link 
+            (user_role_link_user_id, user_role_link_role_id)
+        VALUES
+            ( #{userId}, #{roleId} );
+    </insert>
+    
+    
+    <delete id="deassignFromUser" parameterType="map">
+        DELETE FROM user_role_link 
+        WHERE user_role_link_user_id = #{userId} AND user_role_link_role_id = #{roleId}
+    </delete>
+    
+    
+    <delete id="delete" parameterType="integer">
+        DELETE FROM role WHERE role_id = #{id}
+    </delete>
+    
+    
+    <select id="get" parameterType="integer" resultMap="role">
+        SELECT
+            role_id,
+            role_description,
+            role_name
+        FROM role
+        WHERE role_id = #{id}
+    </select>
+        
+        
+    <select id="getByName" parameterType="string" resultMap="role">
+        SELECT
+            role_id,
+            role_description,
+            role_name
+        FROM role
+        WHERE role_name = #{name}
+    </select>
+            
+    
+    <select id="listAll" resultMap="role">
+        SELECT
+            role_id,
+            role_description,
+            role_name
+        FROM role
+        ORDER BY role_name
+    </select>
+    
+    
+    <select id="listByPermission" parameterType="integer" resultMap="role">
+        SELECT
+            role_id,
+            role_description,
+            role_name
+        FROM role
+        INNER JOIN role_perm_link ON role_perm_link_role_id = role_id
+        INNER JOIN permission ON perm_id = role_perm_link_perm_id
+        WHERE perm_id = #{permissionId}
+        ORDER BY role_name
+    </select>
+    
+    
+    <select id="listByUser" parameterType="integer" resultMap="role">
+        SELECT
+            role_id,
+            role_description,
+            role_name
+        FROM role
+        INNER JOIN user_role_link ON user_role_link_role_id = role_id
+        INNER JOIN usr ON user_id = user_role_link_user_id
+        WHERE user_id = #{userId}
+        ORDER BY role_name
+    </select>    
+    
+    
+    <update id="update">
+        UPDATE role SET
+            role_description = #{description},
+            role_name = #{name}
+        WHERE role_id = #{id}
+    </update>
+</mapper>

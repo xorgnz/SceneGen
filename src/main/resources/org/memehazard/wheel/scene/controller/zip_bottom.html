@@ -1,0 +1,29 @@
+},
+                },
+                interaction: {},
+                url: "/SIG-SceneGen/",
+            };
+
+            // Load AVA
+            var mainApp = new CGA_Main(cgaConfig);
+            mainApp.addController("base", new CGA_BaseController(mainApp));
+            var ava = new AVA_Main(mainApp, sceneObjectDescriptors);
+        });
+
+    </script>
+</head>
+<body>
+    <div id="cga_gfx_container">
+        <div id="cga_lpp_wrap"><div id="cga_lpp">&#160;</div></div>
+
+        <div id="cga_help_wrap"><div id="cga_help">&#160;</div></div>
+
+        <div id="ava_ui_container">
+            <div id="ava_ui_right_panel"><div id="ava_contents">&#160;</div></div>
+            <div id="ava_ui_left_panel"><div id="ava_picking">&#160;</div></div>
+        </div>
+
+        <div id="cga_help_button">&#160;</div>
+    </div>
+</body>
+</html>

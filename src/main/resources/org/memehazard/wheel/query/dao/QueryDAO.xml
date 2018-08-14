@@ -1,0 +1,127 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.memehazard.wheel.query.dao.QueryDAO">
+
+    <cache />
+    
+    <resultMap id="queryWithParameters" type="org.memehazard.wheel.query.model.Query">
+        <id property="id" column="query_id" />
+        <result property="name" column="query_name" />
+        <result property="description" column="query_description" />
+        <result property="tags" column="query_tags" />
+        <result property="queryId" column="query_qid" />
+        <collection property="parameters" ofType="org.memehazard.wheel.query.model.QueryParameter">
+            <result property="label" column="queryp_label" />
+            <result property="variable" column="queryp_variable" />
+            <result property="tagString" column="queryp_tags" />
+        </collection>
+    </resultMap>
+    
+    
+    <insert id="add" parameterType="org.memehazard.wheel.query.model.Query">
+        <selectKey keyProperty="id" resultType="int" order="BEFORE">
+            select nextval('query_query_id_seq'::regclass)
+        </selectKey>
+        
+        INSERT INTO query 
+            (query_id, query_name, query_description, query_tags, query_qid)
+        VALUES 
+        (
+            #{id}, #{name}, #{description}, #{tags}, #{queryId}
+        );
+    </insert>
+                
+            
+    <insert id="addParameters">
+        INSERT INTO query_param 
+            (queryp_label, queryp_variable, queryp_tags, queryp_query_id)
+        VALUES 
+            <foreach collection="parameters" item="element" index="index" open="(" separator="),("  close=")">
+                #{element.label}, #{element.variable}, #{element.tagString}, #{queryId}
+            </foreach>
+    </insert>
+    
+    
+    <delete id="delete" parameterType="integer">
+        DELETE FROM query WHERE query_id = #{id}
+    </delete>
+    
+    
+    <delete id="deleteParametersByQuery">
+        DELETE FROM query_param WHERE queryp_query_id = #{queryId}; 
+    </delete>
+    
+    
+    <select id="get" parameterType="integer" resultMap="queryWithParameters">
+        SELECT
+            query_id,
+            query_name,
+            query_description,
+            query_tags,
+            query_qid,
+            queryp_label,
+            queryp_variable,
+            queryp_tags
+        FROM query
+        LEFT OUTER JOIN query_param ON query_id = queryp_query_id
+        WHERE query_id = #{id}
+        ORDER BY queryp_variable
+    </select>
+        
+    
+    <select id="findByQueryId" parameterType="integer" resultMap="queryWithParameters">
+        SELECT
+            query_id,
+            query_name,
+            query_description,
+            query_tags,
+            query_qid,
+            queryp_label,
+            queryp_variable,
+            queryp_tags
+        FROM query
+        LEFT OUTER JOIN query_param ON query_id = queryp_query_id
+        WHERE query_qid = #{qid}
+        ORDER BY queryp_variable
+    </select>
+        
+        
+    <select id="listAll" resultMap="queryWithParameters">
+        SELECT
+            query_id,
+            query_name,
+            query_description,
+            query_tags,
+            query_qid,
+            queryp_label,
+            queryp_variable,
+            queryp_tags
+        FROM query
+        LEFT OUTER JOIN query_param ON query_id = queryp_query_id
+        ORDER BY query_name, queryp_variable, queryp_tags
+    </select>
+    
+    
+    <update id="update">
+        UPDATE query SET
+            query_name = #{name},
+            query_description = #{description},
+            query_qid = #{queryId},
+            query_tags = #{tags}
+        WHERE query_id = #{id}
+    </update>
+    
+    
+    <update id="updateParameters">
+        DELETE FROM query_param WHERE queryp_query_id = #{queryId}; 
+        
+        INSERT INTO query_param 
+            (queryp_label, queryp_variable, queryp_tags, queryp_query_id)
+        VALUES 
+            <foreach collection="parameters" item="element" index="index" open="(" separator="),("  close=")">
+                #{element.label}, #{element.variable}, #{element.tagString}, #{queryId}
+            </foreach>   
+    </update>    
+    
+</mapper>

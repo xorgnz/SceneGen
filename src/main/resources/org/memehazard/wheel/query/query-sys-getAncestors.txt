@@ -1,0 +1,25 @@
+SceneGen - List all ancestors of entity with given FMAID
+--
+
+Param: FMAID of source entity
+
+Returns FMAID and name of all entities that are ancestors of given entity, along with given entity itself
+
+--
+
+PREFIX fma:<http://purl.org/sig/ont/fma/>
+PREFIX rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+PREFIX xsd:<http://www.w3.org/2001/XMLSchema#>
+CONSTRUCT
+{
+    ?entity fma:name ?pname_val .
+    ?entity fma:FMAID ?fmaid .
+}
+FROM <http://purl.org/sig/ont/fma.owl>
+WHERE
+{
+    ?origin fma:FMAID "<#0>"^^xsd:string .
+    ?origin rdfs:subClassOf* ?entity .
+    ?entity fma:FMAID ?fmaid .
+    ?entity fma:preferred_name ?pname_val .
+}

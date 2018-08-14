@@ -1,0 +1,95 @@
+<beans:beans
+    xmlns="http://www.springframework.org/schema/security"
+    xmlns:beans="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+                    http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+                    http://www.springframework.org/schema/security
+                    http://www.springframework.org/schema/security/spring-security-3.1.xsd">
+
+    <!-- Disable security for static resources -->
+    <http
+        pattern="/images/**"
+        security="none"/>
+    <http
+        pattern="/scripts/**"
+        security="none"/>
+    <http
+        pattern="/styles/**"
+        security="none"/>
+    <http
+        pattern="/testMeshes/**"
+        security="none"/>
+
+    <!--
+        Disable security for development
+        - REST services for explorer JS development
+        - REST services for inspectable SM JS development
+        - file access for explorer JS development
+    -->
+    <http
+        pattern="/tutoring/**"
+        security="none"/>
+    <http
+        pattern="/explorer/**"
+        security="none"/>
+    <http
+        pattern="/REST/**"
+        security="none"/>
+    <http
+        pattern="/asset/file/**"
+        security="none"/>
+    <http
+        pattern="/textCompletion/**"
+        security="none"/>
+    <http
+        pattern="/game/**"
+        security="none"/>
+
+    <!-- Enable security rules -->
+    <http access-decision-manager-ref="accessDecisionManager">
+        <intercept-url
+            pattern="/access-denied"
+            access=""/>
+        <intercept-url
+            pattern="/rbac/**"
+            access="PERM_edit_rbac"/>
+        <intercept-url
+            pattern="/**"
+            access="WHEEL_LOGGED_IN"/>
+        <access-denied-handler error-page="/access-denied"/>
+        <form-login/>
+        <logout/>
+    </http>
+
+    <!-- Create Password Encoder -->
+    <beans:bean
+        id="passwordEncoder"
+        class="org.memehazard.wheel.core.security.WheelPasswordEncoder" />
+
+    <!-- Register the WheelUserDetailsService -->
+    <beans:bean
+        id="wheelUserDetailsService"
+        class="org.memehazard.wheel.core.security.WheelUserDetailsService" />
+
+    <!-- Configure authentication to use the WheelUserDetailsService -->
+    <authentication-manager>
+        <authentication-provider user-service-ref="wheelUserDetailsService">
+            <password-encoder ref="passwordEncoder"/>
+        </authentication-provider>
+    </authentication-manager>
+
+    <!-- Register the Access Decision Manager (allowing injection of a custom access voter -->
+    <beans:bean
+        id="accessDecisionManager"
+        class="org.springframework.security.access.vote.UnanimousBased">
+        <beans:constructor-arg>
+            <beans:list>
+                <beans:bean class="org.memehazard.wheel.core.security.WheelAccessDecisionVoter"/>
+                <beans:bean class="org.springframework.security.access.vote.RoleVoter"/>
+                <beans:bean class="org.springframework.security.access.vote.AuthenticatedVoter"/>
+            </beans:list>
+        </beans:constructor-arg>
+    </beans:bean>
+
+</beans:beans>

@@ -1,0 +1,36 @@
+SceneGen - List relationships and subject / object of all entities to which 'target' (FMAID) is a party
+
+--
+
+Param: target -> FMAID of origin entity
+
+Returns list of relationships with list of referenced entity labels and names.
+
+--
+
+PREFIX fma:<http://purl.org/sig/ont/fma/>
+PREFIX xsd:<http://www.w3.org/2001/XMLSchema#>
+PREFIX rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+CONSTRUCT
+{
+    ?entity rdfs:label ?entity_name .
+    ?origin rdfs:label ?origin_name .
+    
+    ?entity fma:FMAID ?fmaid .
+    ?origin fma:FMAID "<#0>"^^xsd:string .
+    
+    ?entity ?orelation ?origin .
+    ?origin ?srelation ?entity .
+}
+FROM <http://purl.org/sig/ont/fma.owl>
+WHERE
+{
+    ?origin fma:FMAID "<#0>"^^xsd:string .
+    
+    { ?origin ?srelation ?entity } UNION { ?entity ?orelation ?origin } .
+    
+    ?entity fma:FMAID ?fmaid .
+
+    ?entity fma:preferred_name ?entity_name .
+    ?origin fma:preferred_name ?origin_name .
+}

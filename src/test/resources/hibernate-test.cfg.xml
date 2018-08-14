@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+    "-//Hibernate/Hibernate Configuration DTD//EN"
+    "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+
+
+<hibernate-configuration>
+    <session-factory>
+        <property name="show_sql">true</property>
+        <property name="format_sql">true</property>
+
+        <mapping class="org.memehazard.wheel.asset.model.Asset" />
+        <mapping class="org.memehazard.wheel.asset.model.AssetSet" />
+        
+        <mapping class="org.memehazard.wheel.style.model.Style" />
+        <mapping class="org.memehazard.wheel.style.model.Stylesheet" />
+        
+        <mapping class="org.memehazard.wheel.query.model.Query"/>
+        <mapping class="org.memehazard.wheel.query.model.QueryParameter"/>
+        <mapping class="org.memehazard.wheel.query.model.QueryCacheLine"/>
+
+        <mapping class="org.memehazard.wheel.rbac.model.Permission" />
+        <mapping class="org.memehazard.wheel.rbac.model.Role" />
+        <mapping class="org.memehazard.wheel.rbac.model.User" />
+        <mapping class="org.memehazard.wheel.rbac.model.UserGroup" />
+        
+        <mapping class="org.memehazard.wheel.scene.model.Scene" />
+        <mapping class="org.memehazard.wheel.scene.model.SceneFragment" />
+    </session-factory>
+</hibernate-configuration>

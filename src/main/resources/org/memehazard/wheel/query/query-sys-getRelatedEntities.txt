@@ -1,0 +1,28 @@
+SceneGen - List all entities related to entity given by FMAID by given relationship type
+
+--
+
+Param: subject -> FMAID of source entity, relation -> relationship type to examine
+
+Returns FMAID, name of all entities that related to subject along with entity itself
+
+--
+
+PREFIX fma:<http://purl.org/sig/fma#>
+PREFIX xsd:<http://www.w3.org/2001/XMLSchema#>
+PREFIX rdf:<http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+CONSTRUCT
+{
+    ?entity fma:name ?pname_val .
+    ?entity fma:FMAID ?fmaid .
+}
+FROM <http://purl.org/sig/fma>
+WHERE
+{
+    ?origin fma:FMAID "subject"^^xsd:string .
+    ?origin relation? ?entity .
+    ?entity fma:FMAID ?fmaid .
+    ?entity fma:Preferred_name ?pname_node .
+    ?pname_node fma:name ?pname_val .
+}

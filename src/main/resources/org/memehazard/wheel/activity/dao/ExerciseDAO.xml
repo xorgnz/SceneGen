@@ -1,0 +1,124 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.memehazard.wheel.activity.dao.ExerciseDAO">
+
+    <cache />
+    <cache-ref namespace="org.memehazard.wheel.activity.dao.ActivityInstanceDAO"/>
+    <cache-ref namespace="org.memehazard.wheel.activity.dao.ActivityTemplateDAO"/>
+    
+    <resultMap id="exercise" type="org.memehazard.wheel.activity.model.Exercise">
+        <id property="id" column="exercise_id" />
+        <association property="activityInstance" javaType="org.memehazard.wheel.activity.model.ActivityInstance">
+            <result property="id" column="exercise_activityi_id" />
+            <result property="name" column="activityi_name" />
+            <result property="description" column="activityi_description" />
+            <result property="parameterValueString" column="activityi_param_str" />
+            <association property="template" javaType="org.memehazard.wheel.activity.model.ActivityTemplate">
+                <result property="id" column="activityt_id" />
+                <result property="name" column="activityt_name" />
+                <result property="description" column="activityt_description" />
+                <result property="playUrl" column="activityt_url_play" />
+                <result property="factsUrl" column="activityt_url_facts" />
+                <collection property="parameters" ofType="org.memehazard.wheel.activity.model.Parameter">
+                    <result property="label" column="activitytp_label" />
+                    <result property="variable" column="activitytp_variable" />
+                    <result property="type" column="activitytp_type" />
+                </collection>
+            </association>
+        </association>
+        <association property="curriculum" javaType="org.memehazard.wheel.tutoring.model.Curriculum">
+            <result property="nodeId" column="exercise_curriculum_id" />
+        </association>
+    </resultMap>
+        
+    <insert id="add">
+        <selectKey keyProperty="id" resultType="int" order="BEFORE">
+            select nextval('exercise_exercise_id_seq'::regclass)
+        </selectKey>
+        
+        INSERT INTO exercise
+            (exercise_id, exercise_activityi_id, exercise_curriculum_id)
+        VALUES 
+        (
+            #{id}, #{activityInstance.id}, #{curriculum.nodeId}
+        );        
+    </insert>
+        
+    <delete id="delete" parameterType="integer">
+        DELETE FROM exercise 
+        WHERE 
+            exercise_id = #{id} 
+    </delete>
+
+    <select id="listAll" resultMap="exercise">
+        SELECT
+            exercise_id,
+            exercise_activityi_id,
+            exercise_curriculum_id,
+            activityi_name,
+            activityi_description,
+            activityi_param_str,
+            activityt_id,
+            activityt_name,
+            activityt_description,
+            activityt_url_play,
+            activityt_url_facts,
+            activitytp_label,
+            activitytp_variable,
+            activitytp_type
+        FROM exercise
+        LEFT OUTER JOIN activity_instance ON exercise_activityi_id = activityi_id
+        LEFT OUTER JOIN activity_template ON activityi_activityt_id = activityt_id
+        LEFT OUTER JOIN activity_template_param ON activityt_id = activitytp_activityt_id
+    </select>
+     
+    <select id="listByCurriculum" parameterType="integer" resultMap="exercise">
+        SELECT
+            exercise_id,
+            exercise_activityi_id,
+            exercise_curriculum_id,
+            activityi_name,
+            activityi_description,
+            activityi_param_str,
+            activityt_id,
+            activityt_name,
+            activityt_description,
+            activityt_url_play,
+            activityt_url_facts,
+            activitytp_label,
+            activitytp_variable,
+            activitytp_type
+        FROM exercise
+        LEFT OUTER JOIN activity_instance ON exercise_activityi_id = activityi_id
+        LEFT OUTER JOIN activity_template ON activityi_activityt_id = activityt_id
+        LEFT OUTER JOIN activity_template_param ON activityt_id = activitytp_activityt_id
+        WHERE exercise_curriculum_id = #{id}
+        ORDER BY activityi_name ASC
+    </select>
+       
+    <select id="listByActivityInstance" parameterType="integer" resultMap="exercise">
+        SELECT
+            exercise_id,
+            exercise_activityi_id,
+            exercise_curriculum_id,
+            activityi_name,
+            activityi_description,
+            activityi_param_str,
+            activityt_id,
+            activityt_name,
+            activityt_description,
+            activityt_url_play,
+            activityt_url_facts,
+            activitytp_label,
+            activitytp_variable,
+            activitytp_type
+        FROM exercise
+        LEFT OUTER JOIN activity_instance ON exercise_activityi_id = activityi_id
+        LEFT OUTER JOIN activity_template ON activityi_activityt_id = activityt_id
+        LEFT OUTER JOIN activity_template_param ON activityt_id = activitytp_activityt_id
+        WHERE exercise_activityi_id = #{id}
+        ORDER BY activityi_name ASC
+    </select>
+
+</mapper>

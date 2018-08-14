@@ -1,0 +1,12 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.memehazard.wheel.style.test.TestDAO_Style">
+
+    <cache/>
+
+    <insert id="clear">
+        DELETE FROM style;
+        DELETE FROM stylesheet;
+    </insert>
+</mapper>

@@ -1,0 +1,322 @@
+@CHARSET "ISO-8859-1";
+
+/* ******************************************************************************* 
+   Table sizes
+   ------------------------------------------------------------------------------- */
+div.glue {
+    width: 772px;
+    background-color: #e0ffe0;
+    padding: 8px;
+    text-align: center;
+    margin-bottom: 12px;
+}
+
+div.glue.half {
+    width: 386px;
+    background-color: #e0ffe0;
+    padding: 8px;
+    text-align: center;
+    margin: 0px auto 12px auto;
+}
+
+table.full {
+    width: 772px;
+    margin: 0px auto;
+    border: 1px #000 solid;
+}
+
+table.half {
+    width: 386px;
+    margin: 0px auto;
+    border: 1px #000 solid;
+}
+
+table.side {
+    width: 388px;
+    margin: 0px auto;
+    border: 1px #000 solid;
+}
+
+/* ******************************************************************************* 
+   List tables
+   ------------------------------------------------------------------------------- */
+table.list {
+    padding: 2px 2px 2px 2px;
+    border-spacing: 0px;
+}
+
+table.list tr:nth-child(odd) {
+    background-color: #eee;
+}
+
+table.list tr:nth-child(even) {
+    background-color: #ccc;
+}
+
+table.list th {
+    padding: 2px;
+    margin: 0px;
+    border-top: 2px solid #008000;
+    border-bottom: 2px solid #003000;
+    text-align: left;
+    vertical-align: top;
+    background-color: #005800;
+    color: white;
+}
+
+table.list td {
+    padding: 2px;
+    margin: 0px;
+    text-align: left;
+    vertical-align: top;
+    border-top: 0px;
+    border-bottom: 1px #aaa solid;
+}
+
+/* ******************************************************************************* 
+   Data tables
+   ------------------------------------------------------------------------------- */
+table.data th {
+    padding: 2px;
+    margin: 0px;
+    border-top: 2px solid #008000;
+    border-bottom: 2px solid #003000;
+    text-align: left;
+    background-color: #005800;
+    color: white;
+    width: 80px;
+}
+
+table.data td {
+    background-color: #fff;
+    text-align: left;
+    width: 50%;
+}
+
+/*  ******************************************************************************* 
+    Message boxes
+    ------------------------------------------------------------------------------- */
+div.msg_bad {
+    padding: 8px;
+    background-color: #faa;
+    margin-bottom: 12px;
+    width: 768px;
+    border: 2px #600 solid;
+    font-size: 16px;
+}
+
+div.msg_good {
+    padding: 8px;
+    background-color: #aaf;
+    margin-bottom: 12px;
+    width: 768px;
+    border: 2px #006 solid;
+    font-size: 16px;
+}
+
+div.msg_neutral {
+    padding: 8px;
+    background-color: #ffa;
+    margin-bottom: 12px;
+    width: 768px;
+    border: 2px #660 solid;
+    font-size: 16px;
+}
+
+/*  ******************************************************************************* 
+    Field sets
+    ------------------------------------------------------------------------------- */
+fieldset {
+    padding: 8px 12px 12px 12px;
+    margin: 0px;
+    border: 1px #000 solid;
+    text-align: left;
+}
+
+fieldset legend {
+    text-align: left;
+}
+
+fieldset label {
+    display: inline-block;
+    width: 194px;
+    padding: 4px 6px;
+    height: 16px;
+    margin: 2px;
+    text-align: right;
+    vertical-align: top;
+    font-size: 13px;
+    font-weight: bold;
+    border-top: 2px solid #008000;
+    border-bottom: 2px solid #003000;
+    background-color: #005800;
+    color: white;
+}
+
+fieldset div {
+    display: inline-block;
+    vertical-align: top;
+    margin: 0px 0px;
+}
+
+fieldset div div.text {
+    font-size: 12px;
+}
+
+fieldset span.error {
+    color: #fff;
+    height: auto;
+    margin: 0px 0px 6px 6px;
+    background-color: #C76C6C;
+    border: 2px #500 solid;
+    width: 520px;
+}
+
+fieldset hr {
+    margin: 10px 2px 10px 216px;
+    border: 0;
+    height: 1px;
+    background-color: #666;
+}
+
+/*  *******************************************************************************
+    Input fields (field set)
+    ------------------------------------------------------------------------------- */
+fieldset span {
+    display: inline-block;
+    width: 245px;
+    padding: 4px 2px;
+    margin: 2px 2px;
+    height: 18px;
+    font-size: 13px;
+}
+
+fieldset input[type="text"] {
+    display: inline-block;
+    width: 522px;
+    padding: 2px;
+    margin: 2px 2px 2px 6px;
+    border: 1px #aaa solid;
+    height: 22px;
+    font-size: 13px;
+}
+
+fieldset input[type="text"]:disabled {
+    color: #000;
+    background-color: #eee;
+}
+
+fieldset input[type="password"] {
+    display: inline-block;
+    width: 522px;
+    padding: 2px;
+    margin: 2px 2px 2px 6px;
+    border: 1px #aaa solid;
+    height: 22px;
+    font-size: 13px;
+}
+
+fieldset input[type="file"] {
+    margin: 4px 5px;
+}
+
+fieldset textarea {
+    display: inline-block;
+    width: 522px;
+    padding: 2px;
+    margin: 2px 2px 2px 6px;
+    border: 1px #aaa solid;
+    height: 100px;
+    ]
+}
+
+fieldset select {
+    display: inline-block;
+    padding: 2px;
+    margin: 2px 2px 2px 6px;
+    border: 1px #aaa solid;
+    /* For some reason, select width & height include padding space as well as border*/
+    height: 28px;
+    width: 528px;
+    font-size: 13px;
+}
+
+fieldset select.wide {
+    width: 624px;
+}
+
+fieldset select:disabled {
+    color: #000;
+    background-color: #eee;
+}
+
+ul.ui-autocomplete /* Auto complete menu style */
+{
+    overflow-y: scroll;
+    overflow-x: hidden;
+    height:400px;
+}
+
+div.rangeLabel_left
+{
+    float: left;
+    padding-top: 3px;
+    font-size: 14px;
+}
+div.rangeLabel_right
+{
+    float: right;
+    padding-top: 3px;
+    font-size: 14px;
+}
+
+
+
+/*  *******************************************************************************
+    Input fields (table)
+    ------------------------------------------------------------------------------- */
+table input[type="text"] {
+    display: inline-block;
+    width: 245px;
+    padding: 2px;
+    margin: 2px 2px;
+    border: 1px #aaa solid;
+    height: 18px;
+}
+
+table input[type="text"].wide {
+    width: 624px;
+}
+
+table input[type="text"]:disabled {
+    color: #000;
+    background-color: #eee;
+}
+
+table input[type="range"] {
+    height: 21px;
+}
+
+table input[type="color"] {
+    border: 1px solid black;
+    box-sizing: content-box;
+    height: 20px;
+    margin-top: 2px;
+    padding: 1px;
+}
+
+
+/*  *******************************************************************************
+    Hierarchical Lists
+    ------------------------------------------------------------------------------- */
+div.hierarchy_element {
+    margin: 0px 0px 0px 20px;
+    background-color: #f00;
+    border-bottom: 1px solid #000;
+    border-top: 1px solid #000;
+    padding: 3px 0px;
+}
+
+span.hierarchy_label {
+    font-size: 12px;
+}

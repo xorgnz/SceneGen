@@ -1,0 +1,133 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.memehazard.wheel.tutoring.dao.EventDAO">
+
+    <cache />
+    <cache-ref namespace="org.memehazard.wheel.tutoring.dao.EnrolmentDAO"/>
+
+    <resultMap id="event" type="org.memehazard.wheel.tutoring.model.Event">
+        <id column="itsev_id" property="id" />
+        <result column="itsev_student_id" property="studentId"/>
+        <result column="itsev_curriculum_id" property="curriculumId"/>
+        <result column="itsev_subject_entity_id" property="subjectEntityId"/>
+        <result column="itsev_relation" property="relation"/>
+        <result column="itsev_object_entity_id" property="objectEntityId"/>
+        <result column="itsev_timestamp" property="timestamp"/>
+        <result column="itsev_value" property="value"/>
+        <result column="itsev_p_assertion" property="pAssertion"/>
+        <result column="itsev_description" property="description"/>
+        <result column="itsev_source" property="source"/>
+    </resultMap>
+
+    
+    <insert id="add" parameterType="org.memehazard.wheel.tutoring.model.Event">
+        <selectKey keyProperty="id" resultType="int" order="BEFORE">
+            select nextval('its_event_itsev_id_seq'::regclass)
+        </selectKey>
+        
+        INSERT INTO its_event
+        (
+            itsev_id, 
+            itsev_student_id, 
+            itsev_curriculum_id, 
+            itsev_subject_entity_id, 
+            itsev_relation, 
+            itsev_object_entity_id, 
+            itsev_timestamp,
+            itsev_value,
+            itsev_p_assertion,
+            itsev_description,
+            itsev_source    
+        )
+        VALUES 
+        (
+            #{id}, 
+            #{studentId}, 
+            #{curriculumId}, 
+            #{subjectEntityId},
+            #{relation},
+            #{objectEntityId},
+            #{timestamp},
+            #{value},
+            #{pAssertion},
+            #{description},
+            #{source}
+        );
+    </insert>
+            
+            
+    <delete id="delete">
+        DELETE FROM its_event 
+        WHERE 
+            itsev_id = #{id} 
+    </delete>
+
+
+    <delete id="deleteByCurriculumAndStudent">
+        DELETE FROM its_event 
+        WHERE 
+            itsev_student_id = #{studentId} 
+        AND 
+            itsev_curriculum_id = #{curriculumId}
+    </delete>    
+
+
+
+    <select id="get" resultMap="event">
+        SELECT
+            itsev_id, 
+            itsev_student_id, 
+            itsev_curriculum_id, 
+            itsev_subject_entity_id, 
+            itsev_relation, 
+            itsev_object_entity_id, 
+            itsev_timestamp,
+            itsev_value,
+            itsev_p_assertion,
+            itsev_description,
+            itsev_source    
+        FROM its_event
+        WHERE 
+            itsev_id = #{id} 
+    </select>
+        
+    <select id="listByCurriculumAndStudent" resultMap="event">
+        SELECT
+            itsev_id, 
+            itsev_student_id, 
+            itsev_curriculum_id, 
+            itsev_subject_entity_id, 
+            itsev_relation, 
+            itsev_object_entity_id, 
+            itsev_timestamp,
+            itsev_value,
+            itsev_p_assertion,
+            itsev_description,
+            itsev_source    
+        FROM its_event
+        WHERE 
+            itsev_student_id = #{studentId} 
+        AND 
+            itsev_curriculum_id = #{curriculumId}
+    </select>
+        
+            
+    <update id="update">
+        UPDATE its_event SET
+            itsev_id                          = #{id}, 
+            itsev_student_id                  = #{studentId}, 
+            itsev_curriculum_id               = #{curriculumId}, 
+            itsev_subject_entity_id           = #{subjectEntityId},
+            itsev_relation                    = #{relation},
+            itsev_object_entity_id            = #{objectEntityId},
+            itsev_timestamp                   = #{timestamp},
+            itsev_value                       = #{value},
+            itsev_p_assertion                 = #{pAssertion},
+            itsev_description                 = #{description},
+            itsev_source                      = #{source}
+        WHERE itsev_id = #{id}
+    </update>
+        
+</mapper>
+

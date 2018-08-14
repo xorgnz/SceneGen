@@ -1,0 +1,24 @@
+SceneGen - Get entity corresponding to given FMAID
+
+--
+
+Param: target -> FMAID of entity
+
+Returns single entity with given FMAID. Empty if no such entity exists
+
+--
+
+PREFIX fma:<http://purl.org/sig/ont/fma/>
+PREFIX xsd:<http://www.w3.org/2001/XMLSchema#>
+PREFIX rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+CONSTRUCT
+{
+    ?origin rdfs:label ?pname_val .
+    ?origin fma:FMAID "<#0>"^^xsd:string .
+}
+FROM <http://purl.org/sig/ont/fma.owl>
+WHERE
+{
+    ?origin fma:FMAID "<#0>"^^xsd:string .
+    ?origin fma:preferred_name ?pname_val .
+}

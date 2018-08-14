@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans
+    xmlns=""
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:beans="http://www.springframework.org/schema/beans"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:mvc="http://www.springframework.org/schema/mvc"
+    xmlns:neo4j="http://www.springframework.org/schema/data/neo4j"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xmlns:task="http://www.springframework.org/schema/task"
+    xmlns:tx="http://www.springframework.org/schema/tx"
+    xmlns:sec="http://www.springframework.org/schema/security"
+    xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+        http://www.springframework.org/schema/data/neo4j http://www.springframework.org/schema/data/neo4j/spring-neo4j.xsd
+        http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
+        http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
+        http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.0.xsd
+        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+    <!--**************************************************************************
+        Spring setup 
+        ************************************************************************** -->
+    
+    <!-- Scans for components, allowing annotation driven bean creation -->
+    <context:component-scan base-package="org.memehazard.wheel"/>
+    
+    
+    
+    
+    <!--**************************************************************************
+        General setup 
+        ************************************************************************** -->
+
+    <!-- File repository manager -->
+    <beans:bean
+        id="fileRepo"
+        class="org.memehazard.wheel.core.fs.FileRepository">
+        <beans:property
+            name="path"
+            value="${fs.genFileStorePath}"/>
+    </beans:bean>
+
+    <!-- Message source -->
+    <beans:bean
+        id="messageSource"
+        class="org.springframework.context.support.ResourceBundleMessageSource"
+        p:basename="messages"/>
+        
+    <!-- Loads wheel configuration. There's probably a better way to do this (using properties?) -->
+    <beans:bean
+        class="org.memehazard.wheel.core.WheelConfiguration"
+        p:siteTitle="Anatomy Engine"/>
+
+
+
+
+    <!--=======================================================================
+         Database - MyBatis
+    ========================================================================-->
+   
+    <!-- Database - Set up JDBC datasource -->
+    <beans:bean
+        id="dataSource"
+        class="org.apache.commons.dbcp.BasicDataSource"
+        destroy-method="close"
+        p:driverClassName="${jdbc.driverClassName}"
+        p:url="${jdbc.databaseurl}"
+        p:username="${jdbc.username}"
+        p:password="${jdbc.password}"/>   
+   
+    <!-- Transaction Manager --> 
+    <!-- <beans:bean id="mybatisTransactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <beans:property name="dataSource" ref="dataSource" />
+    </beans:bean>     -->
+    
+    <!-- SQL Session Factory -->
+    <beans:bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <beans:property name="dataSource" ref="dataSource" />
+    </beans:bean>
+
+    <!-- Mapper configuration. Scans basePackage recursively looking for interfaces that extend the markerInterface -->
+    <beans:bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <beans:property name="basePackage" value="org.memehazard.wheel" />
+        <beans:property name="markerInterface" value="org.memehazard.wheel.core.persist.mybatis.MyBatisDAO" />
+    </beans:bean>
+    
+    
+    
+    
+    <!--==========================================================================
+        Enable Asynchronous processing services
+    ===========================================================================-->
+    <task:annotation-driven executor="executor" />
+    <task:executor id="executor" pool-size="7"/>
+    <task:scheduler id="scheduler" pool-size="10"/>
+    
+    
+    
+
+    <!--**************************************************************************
+        Graph Database setup
+    ***************************************************************************-->
+
+    <!-- Create graph data base service -->
+    <beans:bean
+        id="graphDatabaseService"
+        class="org.neo4j.kernel.EmbeddedGraphDatabase"
+        destroy-method="shutdown">
+        <beans:constructor-arg value="${neo4j.path}"/>
+    </beans:bean>
+    
+    <!-- Perform remaining graph DB configuration -->
+    <!-- <neo4j:config graphDatabaseService="graphDatabaseService" /> -->
+    
+    <!--**************************************************************************
+        MVC setup 
+        ************************************************************************** -->    
+    
+    <!-- Enables the Spring MVC @Controller programming model -->
+    <mvc:annotation-driven/>
+
+</beans:beans>

@@ -1,0 +1,85 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.memehazard.wheel.rbac.dao.UserGroupDAO">
+
+    <cache />
+    <cache-ref namespace="org.memehazard.wheel.rbac.dao.UserDAO"/>
+
+
+    <resultMap id="userGroup" type="org.memehazard.wheel.rbac.model.UserGroup">
+        <id property="id" column="usergrp_id" />
+        <result property="description" column="usergrp_description" />
+        <result property="name" column="usergrp_name" />
+    </resultMap>
+
+
+    <insert id="add" parameterType="org.memehazard.wheel.rbac.model.UserGroup">
+        <selectKey keyProperty="id" resultType="int" order="BEFORE">
+            select nextval('usergroup_usergrp_id_seq'::regclass)
+        </selectKey>
+        
+        INSERT INTO usergroup 
+            (usergrp_id, usergrp_description, usergrp_name)
+        VALUES 
+        (
+            #{id}, #{description}, #{name}
+        );
+    </insert>
+
+    
+    <delete id="delete" parameterType="integer">
+        DELETE FROM usergroup 
+        WHERE usergrp_id = #{id}
+    </delete>
+
+    
+    <select id="get" parameterType="integer" resultMap="userGroup">
+        SELECT
+            usergrp_id,
+            usergrp_description,
+            usergrp_name
+        FROM usergroup
+        WHERE usergrp_id = #{id}
+    </select>
+        
+        
+    <select id="getByName" parameterType="string" resultMap="userGroup">
+        SELECT
+            usergrp_id,
+            usergrp_description,
+            usergrp_name
+        FROM usergroup
+        WHERE usergrp_name = #{name}
+    </select>
+            
+    
+    <select id="listAll" resultMap="userGroup">
+        SELECT
+            usergrp_id,
+            usergrp_description,
+            usergrp_name
+        FROM usergroup
+        ORDER BY usergrp_name
+    </select>
+    
+    
+    <select id="listByUser" parameterType="integer" resultMap="userGroup">
+        SELECT
+            usergrp_id,
+            usergrp_description,
+            usergrp_name
+        FROM usergroup
+        INNER JOIN usergrp_user_link ON usergrp_user_link_usergrp_id = usergrp_id
+        INNER JOIN usr ON user_id = usergrp_user_link_user_id
+        WHERE user_id = #{userId}
+        ORDER BY usergrp_name
+    </select>
+    
+    <update id="update">
+        UPDATE usergroup SET
+            usergrp_description = #{description},
+            usergrp_name = #{name}
+        WHERE usergrp_id = #{id}
+    </update>
+</mapper>

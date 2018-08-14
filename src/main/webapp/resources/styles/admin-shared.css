@@ -1,0 +1,15 @@
+@CHARSET "ISO-8859-1";
+
+body,html {
+    margin: 0px;
+    padding: 0px;
+}
+
+body {
+    font-family: Verdana, Tahoma, Arial, sans serif;
+    font-size: 10px;
+}
+
+button {
+    font-size: 12px;
+}

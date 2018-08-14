@@ -1,0 +1,99 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.memehazard.wheel.style.dao.StylesheetDAO">
+
+    <cache />
+    <cache-ref namespace="org.memehazard.wheel.style.dao.StyleDAO" />
+
+    <resultMap id="stylesheetWithStyles" type="org.memehazard.wheel.style.model.Stylesheet">
+        <id property="id" column="ssheet_id" />
+        <result property="name" column="ssheet_name" />
+        <result property="description" column="ssheet_description" />
+        <result property="tags" column="ssheet_tags" />
+        <collection property="styles" javaType="org.memehazard.wheel.style.model.Style">
+            <id property="id" column="style_id" />
+            <result property="ambient" column="style_ambient" />
+            <result property="alpha" column="style_alpha" />
+            <result property="diffuse" column="style_diffuse" />
+            <result property="emissive" column="style_emissive" />
+            <result property="priority" column="style_priority" />
+            <result property="shininess" column="style_shininess" />
+            <result property="specular" column="style_specular" />
+            <result property="tag" column="style_tag" />
+        </collection>
+    </resultMap>
+
+
+    <resultMap id="stylesheetWithCount" type="org.memehazard.wheel.style.model.Stylesheet">
+        <id property="id" column="ssheet_id" />
+        <result property="name" column="ssheet_name" />
+        <result property="description" column="ssheet_description" />
+        <result property="tags" column="ssheet_tags" />
+        <result property="styleCount" column="ssheet_styleCount" />
+    </resultMap>
+
+        
+    <insert id="add" parameterType="org.memehazard.wheel.style.model.Stylesheet">
+        <selectKey keyProperty="id" resultType="int" order="BEFORE">
+            select nextval('stylesheet_ssheet_id_seq'::regclass)
+        </selectKey>
+        
+        INSERT INTO stylesheet 
+            (ssheet_id, ssheet_name, ssheet_description, ssheet_tags)
+        VALUES 
+        (
+            #{id}, #{name}, #{description}, #{tags}
+        );
+    </insert>
+            
+    
+    <delete id="delete" parameterType="integer">
+        DELETE FROM stylesheet WHERE ssheet_id = #{id}
+    </delete>
+    
+
+    <select id="get" parameterType="integer" resultMap="stylesheetWithStyles">
+        SELECT
+            ssheet_id,
+            ssheet_name,
+            ssheet_description,
+            ssheet_tags,
+            style_id,
+            style_alpha,
+            style_ambient,
+            style_diffuse,
+            style_emissive,
+            style_priority,
+            style_shininess,
+            style_specular,
+            style_tag
+        FROM stylesheet
+        LEFT OUTER JOIN style ON style_ssheet_id = ssheet_id
+        WHERE ssheet_id = #{id}
+        ORDER BY style_priority ASC
+    </select>
+        
+        
+    <select id="listAll" resultMap="stylesheetWithCount">
+        SELECT
+            ssheet_id,
+            ssheet_name,
+            ssheet_description,
+            ssheet_tags,
+            count(style_id) as ssheet_styleCount
+        FROM stylesheet
+        LEFT OUTER JOIN style ON style_ssheet_id = ssheet_id
+        GROUP BY ssheet_id, ssheet_name, ssheet_description, ssheet_tags
+        ORDER BY ssheet_name ASC
+    </select>
+    
+    
+    <update id="update">
+        UPDATE stylesheet SET
+            ssheet_name = #{name},
+            ssheet_description = #{description},
+            ssheet_tags = #{tags}
+        WHERE ssheet_id = #{id}
+    </update>
+</mapper>

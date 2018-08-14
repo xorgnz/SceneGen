@@ -1,0 +1,691 @@
+    /* AE - UI Structure ****************************************************/
+    div#ae_ui_container
+    {
+        margin: 0 auto;
+        padding: 0px;
+        height: 100%;
+        width: 100%;
+        pointer-events: none;
+    }
+    div#ae_ui_left_panel
+    {
+        position:relative;
+        z-index:5;
+        margin-right: 372px;
+        height: 100%;
+        pointer-events: none;
+    }
+    div#ae_ui_right_panel
+    {
+        float: right;
+        width: 480px;
+        height: 98%;
+        overflow-y: auto;
+        padding: 6px;
+        position:relative;
+        z-index:5;
+        pointer-events: none;
+    }
+    div#ae_left_buttons_wrapper
+    {
+        bottom: 0px;
+        position: absolute;
+    }
+
+
+
+
+    /* AE - Buttons **********************************************************/
+    div.ae_left_button
+    {
+        width: 70px;
+        margin-bottom: 10px;
+        margin-left: 10px;
+        display: inline-block;
+
+        pointer-events: auto;
+        cursor: pointer;
+        text-align: center;
+
+        background-color: lightblue;
+        border: white 1px solid;
+        font-size: 12px;
+        padding: 4px;
+    }
+    div.ae_left_button:hover
+    {
+        background-color: rgb(122, 205, 232);
+    }
+
+
+
+
+    /* AE - General panels ***************************************************/
+    div.header h1
+    {
+        font-size: 16px;
+        font-weight: bold;
+        line-height: 18px;
+        margin: 0.3em 0 0.6em 0;
+    }
+
+
+
+
+    /* AE - General forms ****************************************************/
+    ul.ui-autocomplete
+    {
+        overflow-y: scroll;
+        overflow-x: hidden;
+        height: 400px;
+        z-index: 10;
+        width: 256px;
+        font-size: 12px;
+    }
+
+
+
+    /* AE - Focus Panel ************************************/
+    div#ae_command
+    {
+        width: 458px;
+        color: #fff;
+        border: #ffffff solid 1px;
+        padding: 4px;
+        font-family: Verdana, sans serif;
+        font-size: 12px;
+        line-height: normal;
+        background: rgba(64, 64, 64, 0.6);
+        pointer-events: auto;
+        margin-bottom: 8px;
+    }
+    div#ae_command div
+    {
+        vertical-align: top;
+    }
+    div#ae_command div.form
+    {
+        padding: 8px 4px;
+    }
+    div#ae_command label
+    {
+        width: 50px;
+        height: 19px;
+        padding: 2px;
+        display: inline-block;
+    }
+    div#ae_command input
+    {
+        width: 314px;
+        height: 19px;
+        padding: 2px;
+        vertical-align:top;
+        border: 1px;
+    }
+    div#ae_command button
+    {
+        width: 70px;
+        height: 23px;
+        margin: 0px 0px 0px 8px;
+        padding: 2px;
+        vertical-align:top;
+
+        background-color: #606060;
+        border-top: 2px solid white;
+        border-left: 2px solid white;
+        border-right: 2px solid grey;
+        border-bottom: 2px solid grey;
+        color: #ffffff;
+        font-size: 12px;
+    }
+    div#ae_command button:hover
+    {
+        background-color: #808080;
+    }
+
+
+
+
+    /* AE - History Panel ***************************************************/
+    div#ae_history_wrap
+    {
+        width: 100%;
+        height: 0px;
+    }
+    div#ae_history
+    {
+        position: relative;
+        top: 100px;
+        display: none;
+
+        width: 600px;
+        height: 500px;
+        margin: 0 auto;
+        padding: 4px;
+        border: #ffffff solid 1px;
+        z-index: 10;
+        pointer-events: auto;
+
+        background: #181818;
+        color: #fff;
+        font-family: Verdana, sans serif;
+        font-size: 12px;
+        line-height: 14px;
+    }
+    div#ae_history h1
+    {
+        font-size: 18px;
+        margin: 8px 0px 8px 0px;
+    }
+    div#ae_history .row_even
+    {
+        background-color: #404040;
+        padding: 2px;
+    }
+    div#ae_history .row_odd
+    {
+        background-color: #303030;
+        padding: 2px;
+    }
+    div#ae_history .cursor
+    {
+        background-color: #084008;
+    }
+    div#ae_history .text
+    {
+        width: 70px;
+        display: inline-block;
+    }
+    div#ae_history a
+    {
+        color: #B39CF7;
+        font-weight: bold;
+    }
+    div#ae_history::-webkit-scrollbar-track-piece
+    {
+        -webkit-border-bottom-right-radius: 24px;
+        -webkit-border-top-right-radius: 24px;
+    }
+    div#ae_history::-webkit-scrollbar-thumb
+    {
+        -webkit-border-bottom-right-radius: 24px;
+        -webkit-border-top-right-radius: 24px;
+    }
+
+
+
+
+    /* AE - Picking Panel ***************************************************/
+    div#ae_picking
+    {
+        margin: 0px 8px 0px 8px;
+        padding: 8px;
+        color: #fff;
+        font-family: Verdana, sans serif;
+        font-size: 10px;
+        pointer-events: auto;
+        display: none;
+    }
+    div#ae_picking a
+    {
+        color:#7070ff;
+    }
+    div#ae_picking a:visited
+    {
+        color:#7070ff;
+    }
+
+
+
+
+    /* AE - Exploration Panel **************************************************/
+    div#ae_exploration
+    {
+        width: 458px;
+        color: #fff;
+        border: #ffffff solid 1px;
+        padding: 4px;
+        font-family: Verdana, sans serif;
+        font-size: 12px;
+        background: #181818;
+        pointer-events: auto;
+    }
+    div#ae_exploration div.header
+    {
+        margin: 0px 4px 12px 4px;
+    }
+    div#ae_exploration div.header div.shown
+    {
+        width: 265px;
+        display: inline-block;
+        text-align: center;
+        padding: 3px;
+        border: 1px solid #ffffff;
+        margin: 0px 4px 0px 0px;
+    }
+    div#ae_exploration div.header div.button
+    {
+        width: 159px;
+        display: inline-block;
+        text-align: center;
+        padding: 3px;
+        border-top: 2px solid white;
+        border-left: 2px solid white;
+        border-right: 2px solid grey;
+        border-bottom: 2px solid grey;
+        background-color: #606060;
+        margin: 0px 0px 0px 4px;
+        cursor: pointer;
+    }
+    div#ae_exploration div.header div.button:hover
+    {
+        background-color: #808080;
+    }
+    div#ae_exploration div.header div.inScene
+    {
+        background-color: #000080;
+    }
+    div#ae_exploration div.header div.outOfScene
+    {
+        background-color: #800000;
+    }
+    div#ae_exploration div.header div.noModel
+    {
+        background-color: #303030;
+        width: 442px;
+    }
+    div#ae_exploration div.workingNotification
+    {
+        width: 60px;
+        height: 16px;
+        display: none;
+        float: right;
+        background-color: darkgoldenrod;
+        margin: 4px 4px 0px 0px;
+        padding: 3px 6px 3px 3px;
+        text-align: center;
+    }
+    div#ae_exploration div.entities
+    {
+        margin-bottom: 8px;
+        background-color: #909090;
+        padding: 4px;
+        border: 1px solid #ffffff;
+    }
+    div#ae_exploration div.entities div.entity
+    {
+        margin-top: 3px;
+        width: 432px;
+        padding: 3px;
+        display: inline-block;
+        cursor: pointer;
+        vertical-align: top;
+        border: 1px solid #ffffff;
+    }
+    div#ae_exploration div.block_header div.text
+    {
+        width: 250px;
+        font-size: 14px;
+        font-weight: bold;
+        padding: 2px;
+        display: inline-block;
+    }
+    div#ae_exploration div.block_header div.button
+    {
+        width: 50px;
+        display: inline-block;
+        cursor: pointer;
+        padding: 2px;
+        float:right;
+
+        background-color: #606060;
+        border-top: 2px solid white;
+        border-left: 2px solid white;
+        border-right: 2px solid grey;
+        border-bottom: 2px solid grey;
+        text-align: center;
+        margin: 0px 0px 0px 4px;
+    }
+    div#ae_exploration div.block_header div.button:hover
+    {
+        background-color: #808080;
+    }
+    div#ae_exploration div.relationGroup
+    {
+        margin: 0px 4px 12px 4px;
+        background-color: #484848;
+        padding: 4px;
+        border: 1px solid #ffffff;
+        width: 440px;
+    }
+    div#ae_exploration div.relationGroup.highlight
+    {
+        background-color: #a050a0;
+    }
+    div#ae_exploration div.relationGroup div.relation
+    {
+        margin: 0px 0px 8px 0px;
+    }
+    div#ae_exploration div.relationGroup div.relationship
+    {
+        margin-top: 6px;
+        width: 440px;
+    }
+    div#ae_exploration div.relationGroup div.relationship div.entity
+    {
+        width: 197px;
+        padding: 3px;
+        display: inline-block;
+        cursor: pointer;
+        vertical-align: top;
+        border: 1px solid #808080;
+    }
+    div#ae_exploration div.relationGroup div.relationship div.arrow
+    {
+        background: url("../images/ae/arrow.png");
+        width: 26px;
+        height: 11px;
+        margin: 6px 2px 2px 2px;
+        vertical-align: top;
+        display: inline-block;
+    }
+    div#ae_exploration div.relationGroup div.relationship div.entity.noModel
+    {
+        background-color: #303030;
+    }
+    div#ae_exploration div.relationGroup div.relationship div.entity.noModel:hover
+    {
+        background-color: #505050;
+    }
+    div#ae_exploration div.relationGroup div.relationship div.entity.inScene
+    {
+        background-color: #000080;
+    }
+    div#ae_exploration div.relationGroup div.relationship div.entity.inScene:hover
+    {
+        background-color: #2020a0;
+    }
+    div#ae_exploration div.relationGroup div.relationship div.entity.outOfScene
+    {
+        background-color: #800000;
+    }
+    div#ae_exploration div.relationGroup div.relationship div.entity.outOfScene:hover
+    {
+        background-color: #a02020;
+    }
+    div#ae_exploration div.relationGroup div.relationship div.entity.anchor
+    {
+        border: 1px solid yellow;
+    }
+
+
+    /* AE - Drill Panel ***************************************************/
+    div#ae_drill_wrap
+    {
+        width: 100%;
+        height: 0px;
+    }
+    div#ae_drill
+    {
+        position: relative;
+        top: 100px;
+        display: none;
+
+        width: 900px;
+        max-height: 750px;
+
+        border: #ffffff solid 1px;
+        margin: 0 auto;
+        padding: 4px;
+        z-index: 10;
+        pointer-events: auto;
+        overflow-y: scroll;
+        overflow-x: auto;
+
+        background: #181818;
+        color: #fff;
+        font-family: Verdana, sans serif;
+        font-size: 12px;
+    }
+    div#ae_drill div.drillResults
+    {
+        margin: 0px 4px 0px 4px;
+        background-color: #484848;
+        padding: 4px;
+        border: 1px solid #ffffff;
+        width: 874px;
+    }
+    div#ae_drill div.block_header h1
+    {
+        margin: 4px;
+    }
+    div#ae_drill div.block_header div.text
+    {
+        margin: 4px;
+        font-size: 16px;
+        display: inline-block;
+    }
+    div#ae_drill div.drillResults div.relationship
+    {
+        margin-top: 6px;
+        width: 440px;
+    }
+    div#ae_drill div.drillResults div.relationship div.entity
+    {
+        padding: 3px 6px;
+        display: inline-block;
+        cursor: pointer;
+        vertical-align: top;
+        border: 1px solid #808080;
+    }
+    div#ae_drill div.drillResults div.relationship div.arrow
+    {
+        background: url("../images/ae/arrow.png");
+        width: 26px;
+        height: 11px;
+        margin: 6px 2px 2px 2px;
+        vertical-align: top;
+        display: inline-block;
+    }
+    div#ae_drill div.drillResults div.relationship div.entity.noModel
+    {
+        background-color: #303030;
+    }
+    div#ae_drill div.drillResults div.relationship div.entity.noModel:hover
+    {
+        background-color: #505050;
+    }
+    div#ae_drill div.drillResults div.relationship div.entity.inScene
+    {
+        background-color: #000080;
+    }
+    div#ae_drill div.drillResults div.relationship div.entity.inScene:hover
+    {
+        background-color: #2020a0;
+    }
+    div#ae_drill div.drillResults div.relationship div.entity.outOfScene
+    {
+        background-color: #800000;
+    }
+    div#ae_drill div.drillResults div.relationship div.entity.outOfScene:hover
+    {
+        background-color: #a02020;
+    }
+    div#ae_drill div.drillResults div.relationship div.entity.anchor
+    {
+        border: 1px solid yellow;
+    }
+    div#ae_drill div.drillResults div.children
+    {
+        padding-left: 15px;
+    }
+    div#ae_drill div.drillResults div.depth_limit
+    {
+        margin: 6px 2px 2px 8px;
+        padding: 3px 6px;
+        background-color: black;
+        vertical-align: top;
+        border: 1px solid #808080;
+        width: 344px;
+        display: inline-block;
+    }
+    div#ae_drill div.block_header div.button
+    {
+        width: 50px;
+        display: inline-block;
+        cursor: pointer;
+        padding: 2px;
+        float:right;
+
+        background-color: #606060;
+        border-top: 2px solid white;
+        border-left: 2px solid white;
+        border-right: 2px solid grey;
+        border-bottom: 2px solid grey;
+        text-align: center;
+        margin: 0px 0px 0px 4px;
+    }
+    div#ae_drill div.block_header div.button:hover
+    {
+        background-color: #808080;
+    }
+
+    /* AE - Error Panel ***************************************************/
+    div#ae_error
+    {
+        display: none;
+        width: 100%;
+        height: 0px;
+        pointer-events: auto;
+    }
+    div#ae_error div.text
+    {
+        display: block;
+        background-color: darksalmon;
+        margin: auto;
+        position: relative;
+        top: 100px;
+        padding: 6px;
+        width: 400px;
+    }
+    div#ae_error div.text h3
+    {
+        margin: 0px 0px 4px 0px;
+    }
+
+
+    /* AE - Settings Panel ***************************************************/
+    div#ae_settings_wrap
+    {
+        width: 100%;
+        height: 0px;
+    }
+    div#ae_settings
+    {
+        position: relative;
+        top: 100px;
+        display: none;
+
+        margin: 0 auto;
+        padding: 4px;
+        width: 600px;
+        height: 200px;
+        z-index: 10;
+        pointer-events: auto;
+
+        background-color: #bbb;
+        font-size: 10px;
+        font-family: Verdana, sans serif;
+        border-radius: 12px;
+        border: 4px solid #069;
+    }
+    div#ae_settings h1
+    {
+        font-size: 18px;
+        margin: 4px 0px 8px 0px;
+    }
+    div#ae_settings div.label
+    {
+        display: inline-block;
+        font-size: 14px;
+        width: 80px;
+        vertical-align: top;
+        margin: 6px 0px 0px 0px;
+    }
+    div#ae_settings div.fields
+    {
+        display: inline-block;
+        width: 400px;
+        font-size: 12px;
+        margin: 8px 0px 0px 0px;
+    }
+    div#ae_settings input[type="radio"]
+    {
+        display: none;
+    }
+    div#ae_settings input[type="radio"] + label span
+    {
+        display:inline-block;
+        width:19px;
+        height:19px;
+        margin:-1px 4px 0 0;
+        vertical-align:middle;
+        background:url(../images/ae/check_radio_sheet.png) left top no-repeat;
+        cursor:pointer;
+    }
+    div#ae_settings input[type="radio"]:checked + label span
+    {
+        background:url(../images/ae/check_radio_sheet.png) -19px top no-repeat;
+    }
+
+
+    /* AE - Left UI buttons *****************************************************/
+    div#ae_save_wrap
+    {
+        width: 100%;
+        height: 0px;
+    }
+    div#ae_save_panel
+    {
+        position: relative;
+        top: 100px;
+        display: none;
+
+        width: 600px;
+        margin: 0 auto;
+        padding: 4px;
+        border: #ffffff solid 1px;
+        z-index: 10;
+        pointer-events: auto;
+
+        background: #181818;
+        color: #fff;
+        font-family: Verdana, sans serif;
+        font-size: 12px;
+    }
+    div#ae_save_panel h1
+    {
+        margin: 4px;
+    }
+    div#ae_save_panel h2
+    {
+        margin: 8px 4px 4px 4px;
+    }
+    div#ae_save_panel div.glue
+    {
+        margin: 8px 4px;
+        padding: 4px;
+        border: grey solid 1px;
+        background-color: #484848;
+        text-align: center;
+    }
+    div#ae_save_panel div.glue button,
+    div#ae_save_panel div.glue select
+    {
+        margin: 4px;
+    }
+    div#ae_save_panel span.text
+    {
+        margin: 8px 4px 4px 4px;
+    }
+

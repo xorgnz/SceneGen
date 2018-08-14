@@ -1,0 +1,27 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.memehazard.wheel.textCompletion.dao.TextCompletionDAO">
+
+    <cache />
+
+    <select id="listCompletions" parameterType="map" resultType="string">
+        SELECT
+            tc_value
+        FROM text_completion
+        WHERE tc_value ILIKE '%' || #{prefix} || '%'
+        ORDER BY tc_value
+        LIMIT #{limit}
+    </select>
+    
+    <select id="listCompletionsWithPrefix" parameterType="map" resultType="string">
+        SELECT
+            tc_value
+        FROM text_completion
+        WHERE tc_value ILIKE #{prefix} || '%'
+        ORDER BY tc_value
+        LIMIT #{limit}
+    </select>
+    
+</mapper>
+

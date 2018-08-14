@@ -1,0 +1,14 @@
+
+
+Retrieve all rdfs:label values from FMA. Used to update text completion
+
+----------
+
+PREFIX fma:<http://purl.org/sig/ont/fma/>
+PREFIX rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+SELECT ?name
+FROM <http://purl.org/sig/ont/fma.owl>
+WHERE
+{
+    ?origin rdfs:label ?name .
+}

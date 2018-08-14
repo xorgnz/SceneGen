@@ -1,0 +1,82 @@
+h2.curriculum {
+    background-color: lightgray;
+    padding: 6px;
+    margin: 8px 0px 4px 0px
+}
+
+div.curriculumInfo {
+    padding: 0px 6px
+}
+
+div.curriculumInfo div.links {
+    font-size: 14px;
+}
+
+h3.exercises {
+    margin: 4px 0px 2px 0px;
+}
+
+table.exercises {
+    margin-left: 8px;
+    border-spacing: 0px;
+    margin-bottom: 16px;
+    font-size: 14px;
+}
+
+table.exercises td {
+    padding: 2px;
+    text-align: left;
+    vertical-align: top;
+    border-top: 0px;
+}
+
+table.exercises tr:nth-child(odd) {
+    background-color: #eee;
+}
+
+table.exercises tr:nth-child(even) {
+    background-color: #ccc;
+}
+
+table.exercises td.name {
+    width: 200px;   
+}
+
+table.exercises td.name div {
+    margin-top: 2px;   
+}
+
+table.exercises td.recommendation div {
+    padding: 3px 6px;
+    font-size: 12px;
+}
+
+table.exercises td.recommendation div.priority_low {
+    background-color: green;
+    color: white;
+}
+
+table.exercises td.recommendation div.priority_medium {
+    background-color: darkgoldenrod;
+    color: white;    
+}
+
+table.exercises td.recommendation div.priority_high {
+    background-color: red;
+    color: white;
+}
+
+table.exercises td.commands div {
+    margin-left: 20px;
+    margin-top: 2px;   
+}
+
+
+
+table.exercises tr:nth-child(odd) td.commands div a{
+    color: #eee;
+}
+
+table.exercises tr:nth-child(even) td.commands div a{
+    color: #ccc;
+}

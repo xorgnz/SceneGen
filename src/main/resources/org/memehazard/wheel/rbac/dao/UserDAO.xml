@@ -1,0 +1,148 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.memehazard.wheel.rbac.dao.UserDAO">
+
+    <cache />
+    <cache-ref namespace="org.memehazard.wheel.rbac.dao.RoleDAO"/>
+    <cache-ref namespace="org.memehazard.wheel.rbac.dao.UserGroupDAO"/>
+    
+    
+    <resultMap id="user" type="org.memehazard.wheel.rbac.model.User">
+        <id property="id" column="user_id" />
+        <result property="email" column="user_email" />
+        <result property="firstName" column="user_firstname" />
+        <result property="lastName" column="user_lastname" />
+        <result property="password" column="user_password" />
+        <result property="username" column="user_username" />
+    </resultMap>
+
+
+    <insert id="add" parameterType="org.memehazard.wheel.rbac.model.User">
+        <selectKey keyProperty="id" resultType="int" order="BEFORE">
+            select nextval('usr_user_id_seq'::regclass)
+        </selectKey>
+        
+        INSERT INTO usr 
+            (user_id, user_email, user_firstname, user_lastname, user_password, user_username)
+        VALUES 
+        (
+            #{id}, #{email}, #{firstName}, #{lastName}, #{password}, #{username}
+        );
+    </insert>
+
+    
+    <insert id="assignToUserGroup" parameterType="map">
+        INSERT INTO usergrp_user_link 
+            (usergrp_user_link_usergrp_id, usergrp_user_link_user_id)
+        VALUES
+            ( #{userGroupId}, #{userId} );
+    </insert>
+    
+    
+    <delete id="deassignFromUserGroup" parameterType="map">
+        DELETE FROM usergrp_user_link 
+        WHERE usergrp_user_link_usergrp_id = #{userGroupId} AND usergrp_user_link_user_id = #{userId}
+    </delete>
+        
+    
+    <delete id="delete" parameterType="integer">
+        DELETE FROM usr WHERE user_id = #{id}
+    </delete>
+
+    
+    <select id="get" parameterType="integer" resultMap="user">
+        SELECT
+            user_id,
+            user_email,
+            user_firstname,
+            user_lastname,
+            user_password,
+            user_username
+        FROM usr
+        WHERE user_id = #{id}
+    </select>
+        
+        
+    <select id="getByEmail" parameterType="string" resultMap="user">
+        SELECT
+            user_id,
+            user_email,
+            user_firstname,
+            user_lastname,
+            user_password,
+            user_username
+        FROM usr
+        WHERE user_email = #{email}
+    </select>
+            
+
+    <select id="getByUsername" parameterType="string" resultMap="user">
+        SELECT
+            user_id,
+            user_email,
+            user_firstname,
+            user_lastname,
+            user_password,
+            user_username
+        FROM usr
+        WHERE user_username = #{username}
+    </select>
+
+    
+    <select id="listAll" resultMap="user">
+        SELECT
+            user_id,
+            user_email,
+            user_firstname,
+            user_lastname,
+            user_password,
+            user_username
+        FROM usr
+        ORDER BY user_lastname, user_firstname
+    </select>
+    
+    
+    <select id="listByRole" parameterType="integer" resultMap="user">
+        SELECT
+            user_id,
+            user_email,
+            user_firstname,
+            user_lastname,
+            user_password,
+            user_username
+        FROM usr
+        INNER JOIN user_role_link ON user_role_link_user_id = user_id
+        INNER JOIN role ON role_id = user_role_link_role_id
+        WHERE role_id = #{roleId}
+        ORDER BY user_lastname, user_firstname
+    </select>
+    
+    
+    <select id="listByUserGroup" parameterType="integer" resultMap="user">
+        SELECT
+            user_id,
+            user_email,
+            user_firstname,
+            user_lastname,
+            user_password,
+            user_username
+        FROM usr
+        INNER JOIN usergrp_user_link ON usergrp_user_link_user_id = user_id
+        INNER JOIN usergroup ON usergrp_id = usergrp_user_link_usergrp_id
+        WHERE usergrp_id = #{userGroupId}
+        ORDER BY user_lastname, user_firstname
+    </select>    
+    
+    
+    <update id="update">
+        UPDATE usr SET
+            user_email = #{email},
+            user_firstname = #{firstName},
+            user_lastname = #{lastName},
+            user_password = #{password},
+            user_username = #{username}
+        WHERE user_id = #{id}
+    </update>
+    
+</mapper>

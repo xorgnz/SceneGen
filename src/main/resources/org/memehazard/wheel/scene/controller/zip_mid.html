@@ -1,0 +1,21 @@
+];
+
+        // Initialize page when ready
+        $(document).ready(function ()
+        {
+            if (typeof errorMessage !== 'undefined')
+            {
+                var msg = "Errors occurred while preparing this scene:\n\n" + errorMessage
+
+                console.log(msg);
+                alert(msg);
+            }
+
+            // Configure viewer
+            var cgaConfig =
+            {
+                elements: {
+                    gfx_container: document.getElementById("cga_gfx_container"),
+                },
+                gfx: {
+                    camera: {

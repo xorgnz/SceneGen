@@ -1,0 +1,138 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.memehazard.wheel.asset.dao.AssetSetDAO">
+
+    <cache />
+    <cache-ref namespace="org.memehazard.wheel.asset.dao.AssetDAO" />
+  
+    <resultMap id="assetSet" type="org.memehazard.wheel.asset.model.AssetSet">
+        <id property="id" column="assetset_id" />
+        <result property="maintainer" column="assetset_maintainer"/>
+        <result property="name" column="assetset_name"/>
+        <result property="assetCount" column="assetCount"/>
+    </resultMap>
+    
+    <resultMap id="assetSetWithAssets" type="org.memehazard.wheel.asset.model.AssetSet">
+        <id property="id" column="assetset_id" />
+        <result property="maintainer" column="assetset_maintainer"/>
+        <result property="name" column="assetset_name"/>
+        <result property="assetCount" column="assetCount"/>
+        
+        <collection property="assets" javaType="org.memehazard.wheel.asset.model.Asset">
+            <id property="id" column="asset_id" />
+            <result property="entityId" column="asset_entity_id"/>
+            <result property="name" column="asset_name"/>
+            <result property="objFilename" column="asset_obj_filename" />
+            <result property="x3dFilename" column="asset_x3d_filename" />
+            <association property="stats" javaType="org.memehazard.wheel.asset.model.Asset3DStatistics">
+                <result property="max_x" column="asset_max_x"/>
+                <result property="max_y" column="asset_max_y"/>
+                <result property="max_z" column="asset_max_z"/>
+                <result property="min_x" column="asset_min_x"/>
+                <result property="min_y" column="asset_min_y"/>
+                <result property="min_z" column="asset_min_z"/>
+                <result property="centroid_x" column="asset_centroid_x"/>
+                <result property="centroid_y" column="asset_centroid_y"/>
+                <result property="centroid_z" column="asset_centroid_z"/>
+            </association>
+        </collection>
+    
+    </resultMap>
+
+    
+    <insert id="add" parameterType="org.memehazard.wheel.asset.model.Asset">
+        <selectKey keyProperty="id" resultType="int" order="BEFORE">
+            select nextval('asset_set_assetset_id_seq'::regclass)
+        </selectKey>
+        
+        INSERT INTO asset_set 
+            (assetset_id, assetset_maintainer, assetset_name)
+        VALUES 
+        (
+            #{id}, #{maintainer}, #{name}
+        );
+    </insert>
+    
+    
+    <delete id="delete" parameterType="integer">
+        DELETE FROM asset_set WHERE assetset_id = #{id}
+    </delete>
+    
+    
+    <select id="get" parameterType="integer" resultMap="assetSet">
+        SELECT
+            assetset_id,
+            assetset_maintainer,
+            assetset_name
+        FROM asset_set
+        WHERE assetset_id = #{id}
+    </select>
+    
+    
+    <select id="getByName" parameterType="string" resultMap="assetSet">
+        SELECT
+            assetset_id,
+            assetset_maintainer,
+            assetset_name
+        FROM asset_set
+        WHERE assetset_name = #{name}
+    </select>    
+    
+        
+    <select id="listAll" resultMap="assetSet">
+        SELECT
+            assetset_id,
+            assetset_maintainer,
+            assetset_name
+        FROM asset_set
+        ORDER BY assetset_name
+    </select>
+    
+        
+    <select id="listAllWithCounts" resultMap="assetSet">
+        SELECT
+            assetset_id,
+            assetset_maintainer,
+            assetset_name,
+            count(asset_assetset_id) as assetCount
+        FROM asset_set
+        LEFT OUTER JOIN asset ON asset_assetset_id = assetset_id
+        GROUP BY assetset_id, assetset_maintainer, assetset_name
+        ORDER BY assetset_name
+    </select>    
+    
+    
+    <select id="listAllWithAssets" resultMap="assetSetWithAssets">
+        SELECT
+            assetset_id,
+            assetset_maintainer,
+            assetset_name,
+            asset_id, 
+            asset_entity_id, 
+            asset_name, 
+            asset_obj_filename, 
+            asset_x3d_filename, 
+            asset_max_x, 
+            asset_max_y, 
+            asset_max_z, 
+            asset_min_x, 
+            asset_min_y, 
+            asset_min_z, 
+            asset_centroid_x, 
+            asset_centroid_y, 
+            asset_centroid_z
+        FROM asset_set
+        LEFT OUTER JOIN asset ON asset_assetset_id = assetset_id
+        ORDER BY assetset_name, asset_name
+    </select>
+
+
+    <update id="update">
+        UPDATE asset_set SET
+            assetset_maintainer = #{maintainer},
+            assetset_name = #{name}
+        WHERE assetset_id = #{id}
+    </update>
+
+</mapper>
